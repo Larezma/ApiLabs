@@ -33,13 +33,13 @@ namespace BusinessLogic.Services
         public async Task Create(Friend model)
         {
             await _repositoryWrapper.Friend.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async Task Update(Friend model)
         {
-            _repositoryWrapper.Friend.Update(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Friend.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
@@ -47,8 +47,8 @@ namespace BusinessLogic.Services
             var friend = await _repositoryWrapper.Friend
                 .FindByCondition(x => x.FriendId == id);
 
-            _repositoryWrapper.Friend.Delete(friend.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Friend.Delete(friend.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

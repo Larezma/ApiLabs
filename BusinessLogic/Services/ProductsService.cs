@@ -33,13 +33,13 @@ namespace BusinessLogic.Services
         public async Task Create(Product model)
         {
             await _repositoryWrapper.Products.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async Task Update(Product model)
         {
-            _repositoryWrapper.Products.Update(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Products.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
@@ -47,8 +47,8 @@ namespace BusinessLogic.Services
             var products = await _repositoryWrapper.Products
                 .FindByCondition(x => x.ProductId == id);
 
-            _repositoryWrapper.Products.Delete(products.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Products.Delete(products.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

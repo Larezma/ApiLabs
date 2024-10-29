@@ -33,13 +33,13 @@ namespace BusinessLogic.Services
         public async Task Create(Comment model)
         {
             await _repositoryWrapper.Comments.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async Task Update(Comment model)
         {
-            _repositoryWrapper.Comments.Update(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Comments.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
@@ -47,8 +47,8 @@ namespace BusinessLogic.Services
             var comments = await _repositoryWrapper.Comments
                 .FindByCondition(x => x.CommentsId == id);
 
-            _repositoryWrapper.Comments.Delete(comments.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Comments.Delete(comments.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

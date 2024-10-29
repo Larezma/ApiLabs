@@ -33,13 +33,13 @@ namespace BusinessLogic.Services
         public async Task Create(UserToAchievement model)
         {
             await _repositoryWrapper.UserToAchievements.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async Task Update(UserToAchievement model)
         {
-            _repositoryWrapper.UserToAchievements.Update(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.UserToAchievements.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
@@ -47,8 +47,8 @@ namespace BusinessLogic.Services
             var userToAchievements = await _repositoryWrapper.UserToAchievements
                 .FindByCondition(x => x.Id == id);
 
-            _repositoryWrapper.UserToAchievements.Delete(userToAchievements.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.UserToAchievements.Delete(userToAchievements.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

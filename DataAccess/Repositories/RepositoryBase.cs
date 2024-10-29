@@ -22,7 +22,7 @@ namespace DataAccess.Repositories
         public async Task<List<T>> FindByCondition(Expression<Func<T, bool>> expression) => 
             await MasteryContext.Set<T>().Where(expression).AsNoTracking().ToListAsync();
         public async Task Create(T entity) => await MasteryContext.Set<T>().AddAsync(entity);
-        public async Task Update(T entity) => MasteryContext.Set<T>().Update(entity);
+        public async Task Update(T entity) =>  MasteryContext.Set<T>().Update(entity);
         public async Task Delete(T entity) => MasteryContext.Set<T>().Remove(entity);
     }
 }

@@ -33,13 +33,13 @@ namespace BusinessLogic.Services
         public async Task Create(UserToDialog model)
         {
             await _repositoryWrapper.UserToDialog.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async Task Update(UserToDialog model)
         {
-            _repositoryWrapper.UserToDialog.Update(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.UserToDialog.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
@@ -47,8 +47,8 @@ namespace BusinessLogic.Services
             var userToDialogs = await _repositoryWrapper.UserToDialog
                 .FindByCondition(x => x.Id == id);
 
-            _repositoryWrapper.UserToDialog.Delete(userToDialogs.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.UserToDialog.Delete(userToDialogs.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

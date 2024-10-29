@@ -33,13 +33,13 @@ namespace BusinessLogic.Services
         public async Task Create(TrainersSchedule model)
         {
             await _repositoryWrapper.TrainersSchedule.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async Task Update(TrainersSchedule model)
         {
-            _repositoryWrapper.TrainersSchedule.Update(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.TrainersSchedule.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
@@ -47,8 +47,8 @@ namespace BusinessLogic.Services
             var trainersSchedule = await _repositoryWrapper.TrainersSchedule
                 .FindByCondition(x => x.Id == id);
 
-            _repositoryWrapper.TrainersSchedule.Delete(trainersSchedule.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.TrainersSchedule.Delete(trainersSchedule.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

@@ -33,13 +33,13 @@ namespace BusinessLogic.Services
         public async Task Create(PhotoUser model)
         {
             await _repositoryWrapper.PhotoUsers.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async Task Update(PhotoUser model)
         {
-            _repositoryWrapper.PhotoUsers.Update(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.PhotoUsers.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
@@ -47,8 +47,8 @@ namespace BusinessLogic.Services
             var photoUsers = await _repositoryWrapper.PhotoUsers
                 .FindByCondition(x => x.PhotoId == id);
 
-            _repositoryWrapper.PhotoUsers.Delete(photoUsers.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.PhotoUsers.Delete(photoUsers.First());
+            await _repositoryWrapper.Save();
         }
     }
 }

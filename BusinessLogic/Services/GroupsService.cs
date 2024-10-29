@@ -33,13 +33,13 @@ namespace BusinessLogic.Services
         public async Task Create(Group model)
         {
             await _repositoryWrapper.Group.Create(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Save();
         }
 
         public async Task Update(Group model)
         {
-            _repositoryWrapper.Group.Update(model);
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Group.Update(model);
+            await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
@@ -47,8 +47,8 @@ namespace BusinessLogic.Services
             var group = await _repositoryWrapper.Group
                 .FindByCondition(x => x.GroupsId == id);
 
-            _repositoryWrapper.Group.Delete(group.First());
-            _repositoryWrapper.Save();
+            await _repositoryWrapper.Group.Delete(group.First());
+            await _repositoryWrapper.Save();
         }
     }
 }
