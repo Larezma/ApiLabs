@@ -2,19 +2,13 @@ name: dotnet format
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  push:
     paths:
       - "**.cs"
       - ".editorconfig"
 
 jobs:
   check-format:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Setup .NET Core
