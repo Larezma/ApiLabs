@@ -2,9 +2,13 @@ name: dotnet format
 
 on:
   push:
-    paths:
-      - "**.cs"
+    branches:
+      - main
+      - "**.cs" 
       - ".editorconfig"
+  pull_request:
+    branches:
+      - main
 
 jobs:
   check-format:

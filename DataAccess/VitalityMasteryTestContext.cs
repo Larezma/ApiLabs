@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Domain.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text.RegularExpressions;
-using Microsoft.EntityFrameworkCore;
-using Domain.Models;
 
 namespace Domain.Models;
 
@@ -63,7 +63,7 @@ public partial class VitalityMasteryTestContext : DbContext
     public virtual DbSet<UserTraining> UserTrainings { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-/*#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.*/
+        /*#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.*/
         => optionsBuilder.UseSqlServer("Server=DESKTOP-HUGFMTN;Database=VitalityMasteryTest;User Id=mda;Password=12345;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

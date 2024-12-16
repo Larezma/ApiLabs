@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Domain.Interfaces.Service;
+using Domain.Interfaces.Wrapper;
 using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Interfaces.Service;
-using Domain.Interfaces.Wrapper;
-using System.Reflection;
 
 namespace BusinessLogic.Services
 {
@@ -41,7 +41,7 @@ namespace BusinessLogic.Services
 
         public async Task Create(User model)
         {
-            if(model == null)
+            if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
@@ -57,7 +57,7 @@ namespace BusinessLogic.Services
 
         public async Task Update(User model)
         {
-            if(model == null)
+            if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }

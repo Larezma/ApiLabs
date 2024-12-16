@@ -1,15 +1,15 @@
-﻿using System;
+﻿using BusinessLogic.Services;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Domain.Models;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
-using BusinessLogic.Services;
-using Domain.Models;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -121,8 +121,8 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             var newTraining = Training;
 
-           await service.Create(newTraining);
-           trainingRepositoryMoq.Verify(x => x.Create(It.IsAny<Training>()), Times.Once);
+            await service.Create(newTraining);
+            trainingRepositoryMoq.Verify(x => x.Create(It.IsAny<Training>()), Times.Once);
         }
 
         [Theory]
