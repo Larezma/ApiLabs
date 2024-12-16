@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic\\BusinessLogic.csproj": {}
+    "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic\\BusinessLogic.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic\\BusinessLogic.csproj": {
+    "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic\\BusinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic\\BusinessLogic.csproj",
+        "projectUniqueName": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic\\BusinessLogic.csproj",
         "projectName": "BusinessLogic",
-        "projectPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic\\BusinessLogic.csproj",
+        "projectPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic\\BusinessLogic.csproj",
         "packagesPath": "C:\\Users\\Otec\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic\\obj\\",
+        "outputPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Otec\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\Domain\\Domain.csproj"
+              "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\Domain\\Domain.csproj"
               }
             }
           }
@@ -69,14 +69,14 @@
         }
       }
     },
-    "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\Domain\\Domain.csproj": {
+    "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Otec\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\Domain\\obj\\",
+        "outputPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Otec\\AppData\\Roaming\\NuGet\\NuGet.Config",

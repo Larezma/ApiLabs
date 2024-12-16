@@ -1,0 +1,1737 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BackendApi</name>
+    </assembly>
+    <members>
+        <member name="M:BackendApi.ControllersDomain.AchievementsControllerAcess.GetAll">
+            <summary>
+            Получение всех ачивок 
+            </summary>
+            <param name="model">Ачивки</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.AchievementsControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение ачивки по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Achievements
+                 {
+                    AchievementsId = 1,
+                 }
+            
+             </remarks>
+             <param name="model">Ачивки</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.AchievementsControllerAcess.Add(BackendApi.Contract.Achievements.CreateAchievementsRequest)">
+             <summary>
+             Создать новой ачивки
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Achievements
+                 {
+                   "AchievementsId = 1,
+                    AchievementsType = 1,
+                    AchievementsText = "Черный мечник",
+                 }
+            
+             </remarks>
+             <param name="model">Ачивки</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.AchievementsControllerAcess.Update(BackendApi.Contract.Achievements.CreateAchievementsRequest)">
+             <summary>
+             Изменить данные ачивки
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Achievements
+                 {
+                    "AchievementsId = 1,
+                     AchievementsType = 1,
+                     AchievementsText = "Черный мечник",
+                 }
+            
+             </remarks>
+             <param name="model">Ачивки</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.AchievementsControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить ачивку по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Achievements
+                 {
+                    "AchievementsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Ачивки</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.CommentsControllerAcess.GetAll">
+            <summary>
+            Получение всех комментариев
+            </summary>
+            <param name="model">Комментарии</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.CommentsControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение комментария по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Comments
+                 {
+                    "CommentsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Комментарии</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.CommentsControllerAcess.Add(BackendApi.Contract.Comments.CreateCommentsRequest)">
+             <summary>
+             Создать нового пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Comments
+                 {
+                    "CommentsId": 1,
+                    "UserId": 1,
+                    "ItemId": 1,
+                    "ItemType": "ssdds",
+                    "CommentsText": "фывыввы",
+                 }
+            
+             </remarks>
+             <param name="model">Комментарии</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.CommentsControllerAcess.Update(BackendApi.Contract.Comments.GetCommentsResponse)">
+             <summary>
+             Изменить данные комментария
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Comments
+                 {
+                    "CommentsId": 1,
+                    "UserId": 1,
+                    "ItemId": 1,
+                    "ItemType": "ssdds",
+                    "CommentsText": "фывыввы",
+                 }
+            
+             </remarks>
+             <param name="model">Комментарии</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.CommentsControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить комментарий по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Users
+                 {
+                    "CommentsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Комментарии</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.DialogsControllerAcess.GetAll">
+            <summary>
+            Получение всех диалогов
+            </summary>
+            <param name="model">Диалоги</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.DialogsControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение диалога по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Dialogs
+                 {
+                    "DialogsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Диалоги</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.DialogsControllerAcess.Add(BackendApi.Contract.Dialogs.CreateDialogsRequest)">
+             <summary>
+             Создать новый диалога
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Dialogs
+                 {
+                    "DialogsId": 1,
+                    "TextDialogs": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Диалоги</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.DialogsControllerAcess.Update(BackendApi.Contract.Dialogs.GetDialogsResponse)">
+             <summary>
+             Изменить данные диалога
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Dialogs
+                 {
+                    "DialogsId": 1,
+                    "TextDialogs": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Диалоги</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.DialogsControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить диалог по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Dialogs
+                 {
+                    "DialogsId": 1,
+                 }
+            
+            
+             </remarks>
+             <param name="model">Диалоги</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.FriendControllerAcess.GetAll">
+            <summary>
+            Получение списка всех друзей в таблице
+            </summary>
+            <param name="model">Друзья</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.FriendControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение друга по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Friend
+                 {
+                    "FriendId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Друзья</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.FriendControllerAcess.Add(BackendApi.Contract.Friend.CreateFriendRequest)">
+             <summary>
+             Создать нового друга
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Friend
+                 {
+                     "FriendId": 1,
+                     "UserId1": 1,
+                     "UserId2": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Друзья</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.FriendControllerAcess.Update(BackendApi.Contract.Friend.GetFriendResponse)">
+             <summary>
+             Изменить данные друга
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Friend
+                 {
+                     "FriendId": 1,
+                     "UserId1": 1,
+                     "UserId2": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Друзья</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.FriendControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить друга по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Friend
+                 {
+                     "FriendId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Друзья</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupMembersControllerAcess.GetAll">
+            <summary>
+            Получение всех пользователей группы
+            </summary>
+            <param name="model">Пользователи группы</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupMembersControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение пользователей группы по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /GroupMembers
+                 {
+                    "GroupsId": 1,
+                    "UserId": 1,
+                    "JoinDate": "Автозаполнение",
+                 }
+            
+             </remarks>
+             <param name="model">Пользователи группы</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupMembersControllerAcess.Add(BackendApi.Contract.Users.CreateUserRequest)">
+             <summary>
+             Создать нового пользователей группы
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /GroupMembers
+                 {
+                    "GroupsId": 1,
+                    "UserId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Пользователи группы</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupMembersControllerAcess.Update(BackendApi.Contract.GroupMembers.GetGroupMembersResponse)">
+             <summary>
+             Изменить данные пользователей группы
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /GroupMembers
+                 {
+                    "GroupsId": 1,
+                    "UserId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Пользователи группы</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupMembersControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить пользователей группы по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Group
+                 {
+                    "GroupsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Пользователи группы</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupsControllerAcess.GetAll">
+            <summary>
+            Получение всех групп
+            </summary>
+            <param name="model">Группы</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupsControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение группу по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Group
+                 {
+                    "GroupsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Группы</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupsControllerAcess.Add(BackendApi.Contract.Groups.CreateGroupsRequest)">
+             <summary>
+             Создать новую группу
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Group
+                 {
+                    "GroupsId": 1,
+                    "userName": "GG",
+                    "OwnerGroups": "ssd@gmail.com",
+                 }
+            
+             </remarks>
+             <param name="model">Группы</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupsControllerAcess.Update(BackendApi.Contract.Groups.GetGroupsResponse)">
+             <summary>
+             Изменить данные группы
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Group
+                 {
+                    "GroupsId": 1,
+                    "userName": "GG",
+                    "OwnerGroups": "ssd@gmail.com",
+                 }
+            
+             </remarks>
+             <param name="model">Группы</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.GroupsControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить группу по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Group
+                 {
+                    "GroupsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Группы</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.MessageUsersControllerAcess.GetAll">
+            <summary>
+            Получение всех сообщений
+            </summary>
+            <param name="model">Сообщений</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.MessageUsersControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение сообщения по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /MessageUsers
+                 {
+                    "MessageId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Сообщений</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.MessageUsersControllerAcess.Add(BackendApi.Contract.MessageUsers.CreateMessageUsersRequest)">
+             <summary>
+             Создать новое сообщение
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /MessageUsers
+                 {
+                    "MessageId": 1,
+                    "SenderId": "1",
+                    "ReceiverId": "1",
+                    "MessageContent": "sssss",
+                 }
+            
+             </remarks>
+             <param name="model">Сообщений</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.MessageUsersControllerAcess.Update(BackendApi.Contract.MessageUsers.GetMessageUsersResponse)">
+             <summary>
+             Изменить данные сообщения
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /MessageUsers
+                 {
+                    "MessageId": 1,
+                    "SenderId": "1",
+                    "ReceiverId": "1",
+                    "MessageContent": "sssss",
+                 }
+            
+             </remarks>
+             <param name="model">Сообщений</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.MessageUsersControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить сообщение по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /MessageUsers
+                 {
+                    "MessageId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Сообщений</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.NutritionControllerAcess.GetAll">
+            <summary>
+            Получение всех питаний пользователя
+            </summary>
+            <param name="model">Питание</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.NutritionControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение питание по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Nutrition
+                 {
+                    "NutritionId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Питания</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.NutritionControllerAcess.Add(BackendApi.Contract.Nutrition.CreateNutritionRequest)">
+             <summary>
+             Создать нового питания
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Nutrition
+                 {
+                    "NutritionId": 1,
+                    "Product": "1",
+                    "MeanType": "вывывы",
+                    "MeanDeacription": "ывывыв",
+                 }
+            
+             </remarks>
+             <param name="model">Питания</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.NutritionControllerAcess.Update(BackendApi.Contract.Nutrition.GetNutritionResponse)">
+             <summary>
+             Изменить данные питание
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Nutrition
+                 {
+                    "NutritionId": 1,
+                    "Product": "1",
+                    "MeanType": "вывывы",
+                    "MeanDeacription": "ывывыв",
+                 }
+            
+             </remarks>
+             <param name="model">Питания</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.NutritionControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить питание по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Nutrition
+                 {
+                    "NutritionId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Питания</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PhotoUsersControllerAcess.GetAll">
+            <summary>
+            Получение всех фото пользователя
+            </summary>
+            <param name="model">Фото пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PhotoUsersControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение фото пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /PhotoUser
+                 {
+                    "PhotoId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Фото пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PhotoUsersControllerAcess.Add(BackendApi.Contract.PhotoUsers.CreatePhotoUsersRequest)">
+             <summary>
+             Создать нового фото пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /PhotoUser
+                 {
+                    "PhotoId": 1,
+                    "UserId": "1",
+                    "PhotoLink": "/descktop/ip.png....",
+                 }
+            
+             </remarks>
+             <param name="model">Фото пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PhotoUsersControllerAcess.Update(BackendApi.Contract.PhotoUsers.GetPhotoUsersResponse)">
+             <summary>
+             Изменить данные фото пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /PhotoUser
+                 {
+                    "PhotoId": 1,
+                    "UserId": "1",
+                    "PhotoLink": "/descktop/ip.png....",
+                 }
+            
+             </remarks>
+             <param name="model">Фото пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PhotoUsersControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /PhotoUser
+                 {
+                    "PhotoId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Фото пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ProductsControllerAcess.GetAll">
+            <summary>
+            Получение всех продукт
+            </summary>
+            <param name="model">Продукты</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ProductsControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение продукта по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Products
+                 {
+                    "ProductId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Продукты</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ProductsControllerAcess.Add(BackendApi.Contract.Products.CreateProductsRequest)">
+             <summary>
+             Создать нового продукта
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Products
+                 {
+                    "ProductId": 1,
+                    "Product1": 1,
+                    "Calories": 1,1111232,
+                    "ProteinPer": 1,1111232,
+                    "FatPer": 1,1111232,
+                    "CarbsPer": 1,1111232,
+                    "VitaminsAndMinerals": 1,1111232,
+                    "NutritionalValue": "sdsdsdssd",
+                 }
+            
+             </remarks>
+             <param name="model">Продукты</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ProductsControllerAcess.Update(BackendApi.Contract.Products.GetProductsResponse)">
+             <summary>
+             Изменить данные продукта
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Products
+                 {
+                    "ProductId": 1,
+                    "Product1": 1,
+                    "Calories": 1,1111232,
+                    "ProteinPer": 1,1111232,
+                    "FatPer": 1,1111232,
+                    "CarbsPer": 1,1111232,
+                    "VitaminsAndMinerals": 1,1111232,
+                    "NutritionalValue": "sdsdsdssd",
+                 }
+            
+             </remarks>
+             <param name="model">Продукты</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ProductsControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить продукта по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Products
+                 {
+                    "ProductId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Продукты</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PublicationControllerAcess.GetAll">
+            <summary>
+            Получение всех публикации
+            </summary>
+            <param name="model">Публикации</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PublicationControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение публикаций по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Publication
+                 {
+                    "PublicationsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Публикации</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PublicationControllerAcess.Add(BackendApi.Contract.Publication.CreatePublicationRequest)">
+             <summary>
+             Создать нового публикаций
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Publication
+                 {
+                    "PublicationsId": 1,
+                    "UsersId": 1,
+                    "PublicationText": "sdsdsdsd",
+                    "PublicationsImage": "sdsdssds",
+                 }
+            
+             </remarks>
+             <param name="model">Публикации</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PublicationControllerAcess.Update(BackendApi.Contract.Publication.GetPublicationResponse)">
+             <summary>
+             Изменить данные пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Publication
+                 {
+                    "PublicationsId": 1,
+                    "UsersId": 1,
+                    "PublicationText": "sdsdsdsd",
+                    "PublicationsImage": "sdsdssds",
+                 }
+            
+             </remarks>
+             <param name="model">Публикации</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.PublicationControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Publication
+                 {
+                    "PublicationsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Публикации</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.RolesControllerAcess.GetAll">
+            <summary>
+            Получение всех ролей
+            </summary>
+            <param name="model">Роли</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.RolesControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение роли по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Role
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Роли</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.RolesControllerAcess.Add(BackendApi.Contract.Roles.CreateRolesRequest)">
+             <summary>
+             Создать новую роль
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Role
+                 {
+                    "Id": 1,
+                    "Roles": "User,Admin,Trainer ////",
+                 }
+            
+             </remarks>
+             <param name="model">Роли</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.RolesControllerAcess.Update(BackendApi.Contract.Roles.GetRolesResponse)">
+             <summary>
+             Изменить данные роли
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Role
+                 {
+                    "Id": 1,
+                    "Roles": "User,Admin,Trainer ////",
+                 }
+            
+             </remarks>
+             <param name="model">Роли</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.RolesControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить роль по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Role
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Роли</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ScheduleControllerAcess.GetAll">
+            <summary>
+            Получение всех расписаний 
+            </summary>
+            <param name="model">Расписания</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ScheduleControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение расписания по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Schedule
+                 {
+                    "ScheduleId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Расписания</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ScheduleControllerAcess.Add(BackendApi.Contract.Schedule.CreateScheduleRequest)">
+             <summary>
+             Создать нового расписания
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Schedule
+                 {
+                    "ScheduleId": 1,
+                    "TrainingId": 1,
+                    "TrainerId": 1,
+                    "TrainingType": "Силовая",
+                    "DayOfWeek": "понедельник",
+                 }
+            
+             </remarks>
+             <param name="model">Расписания</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ScheduleControllerAcess.Update(BackendApi.Contract.Schedule.GetScheduleResponse)">
+             <summary>
+             Изменить данные расписания
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Schedule
+                 {
+                    "ScheduleId": 1,
+                    "TrainingId": 1,
+                    "TrainerId": 1,
+                    "TrainingType": "Силовая",
+                    "DayOfWeek": "понедельник",
+                 }
+            
+             </remarks>
+             <param name="model">Расписания</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.ScheduleControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить расписание по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Schedule
+                 {
+                    "ScheduleId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Расписания</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainerControllerAcess.GetAll">
+            <summary>
+            Получение всех тренеров
+            </summary>
+            <param name="model">Тренеры</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainerControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение тренера по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Trainer
+                 {
+                    "TrainerId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Тренеры</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainerControllerAcess.Add(BackendApi.Contract.Trainer.CreateTrainerRequest)">
+             <summary>
+             Создать нового тренера
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Trainer
+                 {
+                    "TrainerId": 1,
+                    "UserId": 1,
+                    "FirstName": "Иванов",
+                    "MiddleName": "Иван",
+                    "LastName": "Иванович",
+                    "Email": "samdsdos@sds.com",
+                    "phoneNumber": "+70000000000",
+                    "Password": "123423323432134",
+                 }
+            
+             </remarks>
+             <param name="model">Тренеры</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainerControllerAcess.Update(BackendApi.Contract.Trainer.GetTrainerResponse)">
+             <summary>
+             Изменить данные тренера
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Trainer
+                 {
+                    "TrainerId": 1,
+                    "UserId": 1,
+                    "FirstName": "Иванов",
+                    "MiddleName": "Иван",
+                    "LastName": "Иванович",
+                    "Email": "samdsdos@sds.com",
+                    "phoneNumber": "+70000000000",
+                    "Password": "123423323432134",
+                 }
+            
+             </remarks>
+             <param name="model">Тренеры</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainerControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить тренара по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Trainer
+                 {
+                    "TrainerId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Тренеры</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainersScheduleControllerAcess.GetAll">
+            <summary>
+            Получение всех расписание тренеров
+            </summary>
+            <param name="model">Расписание тренеров</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainersScheduleControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение расписание тренеров по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /TrainersSchedule
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Расписание тренеров</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainersScheduleControllerAcess.Add(BackendApi.Contract.TrainersSchedule.CreateTrainersScheduleRequest)">
+             <summary>
+             Создать нового расписание тренеров
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /TrainersSchedule
+                 {
+                    "Id": 1,
+                    "ScheduleId": 1,
+                    "TrainerId": 1,
+                    "TypeOfTraining": "Кардио",
+                    "Date": "11:11:2022",
+                    "Time": "11:11:2022:11:11:11:11"
+                 }
+            
+             </remarks>
+             <param name="model">Расписание тренеров</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainersScheduleControllerAcess.Update(BackendApi.Contract.TrainersSchedule.GetTrainersScheduleResponse)">
+             <summary>
+             Изменить данные расписание тренеров
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /TrainersSchedule
+                 {
+                    "Id": 1,
+                    "ScheduleId": 1,
+                    "TrainerId": 1,
+                    "TypeOfTraining": "Кардио",
+                    "Date": "11:11:2022",
+                    "Time": "11:11:2022:11:11:11:11"
+                 }
+            
+             </remarks>
+             <param name="model">Расписание тренеров</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainersScheduleControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить расписание тренеров по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /TrainersSchedule
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Расписание тренеров</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainingControllerAcess.GetAll">
+            <summary>
+            Получение всех тренировок
+            </summary>
+            <param name="model">Тренировки</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainingControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение тренировки по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Training
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Тренировки</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainingControllerAcess.Add(BackendApi.Contract.Training.CreateTrainingRequest)">
+             <summary>
+             Создать новой тренировки
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Training
+                 {
+                    "TrainingId": 1,
+                    "TrainingDate": "11:11:2022",
+                    "DurationMinutes": "120m",
+                    "CaloriesBurned": 1233333,
+                    "Notes": "sdsdsssdds",
+                    "TrainingType": "saddsdds",
+                 }
+            
+             </remarks>
+             <param name="model">Тренировки</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainingControllerAcess.Update(BackendApi.Contract.Training.GetTrainingResponse)">
+             <summary>
+             Изменить данные тренировки
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Training
+                 {
+                    "TrainingId": 1,
+                    "TrainingDate": "11:11:2022",
+                    "DurationMinutes": "120m",
+                    "CaloriesBurned": 1233333,
+                    "Notes": "sdsdsssdds",
+                    "TrainingType": "saddsdds",
+                 }
+            
+            
+             </remarks>
+             <param name="model">Тренировки</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.TrainingControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить тренеровку по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Training
+                 {
+                    "TrainingId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Тренировки</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserControllerAcess.GetAll">
+            <summary>
+            Получение всех пользователей
+            </summary>
+            <param name="model">Пользователь</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Users
+                 {
+                    "userId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Пользователь</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserControllerAcess.Add(BackendApi.Contract.Users.CreateUserRequest)">
+             <summary>
+             Создать нового пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Users
+                 {
+                    "userName": "GG",
+                    "email": "ssd@gmail.com",
+                    "password": "12345",
+                    "roleUser": 0,
+                    "userImg": null,
+                    "phoneNumber": "123444444",
+                    "aboutMe": null,
+                 }
+            
+             </remarks>
+             <param name="model">Пользователь</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserControllerAcess.Update(BackendApi.Contract.Users.GetUserResponse)">
+             <summary>
+             Изменить данные пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Users
+                 {
+                    "userId": 1,
+                    "userName": "GG",
+                    "email": "ssd@gmail.com",
+                    "password": "12345",
+                    "roleUser": 0,(Не объязательно!),
+                    "userImg": null,(Не объязательно!),
+                    "phoneNumber": "123444444",
+                    "aboutMe": null,(Не объязательно!),
+                 }
+            
+             </remarks>
+             <param name="model">Пользователь</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Users
+                 {
+                    "userId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Пользователь</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserNutritionControllerAcess.GetAll">
+            <summary>
+            Получение всех питания пользователей
+            </summary>
+            <param name="model">Питание пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserNutritionControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение питания пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Users
+                 {
+                    "userId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Питание пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserNutritionControllerAcess.Add(BackendApi.Contract.UserNutrition.CreateUserNutritionRequest)">
+             <summary>
+             Создать новое питания пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Users
+                 {
+                    "userId": 1,
+                    "userName": "GG",
+                    "email": "ssd@gmail.com",
+                    "password": "12345",
+                    "roleUser": 0,(Не объязательно!),
+                    "userImg": null,(Не объязательно!),
+                    "phoneNumber": "123444444",
+                    "aboutMe": null,(Не объязательно!),
+                 }
+            
+             </remarks>
+             <param name="model">Питание пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserNutritionControllerAcess.Update(BackendApi.Contract.UserNutrition.GetUserNutritionResponse)">
+             <summary>
+             Изменить данные питания пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Users
+                 {
+                    "userId": 1,
+                    "userName": "GG",
+                    "email": "ssd@gmail.com",
+                    "password": "12345",
+                    "roleUser": 0,(Не объязательно!),
+                    "userImg": null,(Не объязательно!),
+                    "phoneNumber": "123444444",
+                    "aboutMe": null,(Не объязательно!),
+                 }
+            
+             </remarks>
+             <param name="model">Питание пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserNutritionControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить питания пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /Users
+                 {
+                    "userId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Питание пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToAchievementsControllerAcess.GetAll">
+            <summary>
+            Получение всех ачивки пользователей
+            </summary>
+            <param name="model">Ачивки пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToAchievementsControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение ачивки пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToAchievements
+                 {
+                    "Id": 1,
+                    "UserId": 1,
+                    "AchievementsId": 1,
+                    "GetDateAchievements": "11:11:2020",
+                 }
+            
+             </remarks>
+             <param name="model">Ачивки пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToAchievementsControllerAcess.Add(BackendApi.Contract.UserToAchievements.CreateUserToAchievementsRequest)">
+             <summary>
+             Создать новую ачивку пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToAchievements
+                 {
+                    "Id": 1,
+                    "UserId": 1,
+                    "AchievementsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Ачивки пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToAchievementsControllerAcess.Update(BackendApi.Contract.UserToAchievements.GetUserToAchievementsResponse)">
+             <summary>
+             Изменить данные ачивки пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToAchievements
+                 {
+                    "Id": 1,
+                    "UserId": 1,
+                    "AchievementsId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Ачивки пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToAchievementsControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить ачивку пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToAchievements
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Ачивки пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToDialogsControllerAcess.GetAll">
+            <summary>
+            Получение всех диалогов пользователей
+            </summary>
+            <param name="model">Диалоги пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToDialogsControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение диалогов пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToDialogs
+                 {
+                    "Id": 1,
+                    "DialogId 1,
+                    "UserId": 1,
+                    "TimeCreate": "11:11:2022",
+                 }
+            
+             </remarks>
+             <param name="model">Диалоги пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToDialogsControllerAcess.Add(BackendApi.Contract.UserToDialogs.CreateUserToDialogsRequest)">
+             <summary>
+             Создать нового диалога пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToDialogs
+                 {
+                    "Id": 1,
+                    "DialogId": 1,
+                    "UserId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Диалоги пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToDialogsControllerAcess.Update(BackendApi.Contract.UserToDialogs.GetUserToDialogsResponse)">
+             <summary>
+             Изменить данные диалога пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToDialogs
+                 {
+                    "Id": 1,
+                    "DialogId": 1,
+                    "UserId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Диалоги пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToDialogsControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить диалога пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToDialogs
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Диалоги пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToRuleControllerAcess.GetAll">
+            <summary>
+            Получение всех ролей пользователей
+            </summary>
+            <param name="model">Роли пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToRuleControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение роли пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToRule
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Роли пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToRuleControllerAcess.Add(BackendApi.Contract.UserToRule.CreateUserToRuleRequest)">
+             <summary>
+             Создать новой роли пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToRule
+                 {
+                    "Id": 1,
+                    "UserId": 1,
+                    "RoleId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Роли пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToRuleControllerAcess.Update(BackendApi.Contract.UserToRule.GetUserToRuleResponse)">
+             <summary>
+             Изменить данные роли пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToRule
+                 {
+                    "Id": 1,
+                    "UserId": 1,
+                    "RoleId": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Роли пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserToRuleControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить всех ролей пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserToRule
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Роли пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserTrainingControllerAcess.GetAll">
+            <summary>
+            Получение всех тренеровок пользователей
+            </summary>
+            <param name="model">Тренировки пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserTrainingControllerAcess.GetById(System.Int32)">
+             <summary>
+             Получение тренеровки пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserTraining
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Тренировки пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserTrainingControllerAcess.Add(BackendApi.Contract.UserTraining.CreateUserTrainingRequest)">
+             <summary>
+             Создать новой тренеровки пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserTraining
+                 {
+                    "Id": 1,
+                    "UserId": 1,
+                    "TrainerId": 1,
+                    "TrainingId": 1,
+                    "Duration": "что угодно",
+                    "Notes": "что угодно",
+                    "DayOfWeek": "Понедельник",
+                    "TrainingStatus": "'started','paused','finished'",
+                 }
+            
+             </remarks>
+             <param name="model">Тренировки пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserTrainingControllerAcess.Update(BackendApi.Contract.UserTraining.GetUserTrainingResponse)">
+             <summary>
+             Изменить данные тренеровки пользователя
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserTraining
+                 {
+                    "Id": 1,
+                    "UserId": 1,
+                    "TrainerId": 1,
+                    "TrainingId": 1,
+                    "Duration": "что угодно",
+                    "Notes": "что угодно",
+                    "DayOfWeek": "Понедельник",
+                    "TrainingStatus": "'started','paused','finished'",
+                 }
+            
+             </remarks>
+             <param name="model">Тренировки пользователя</param>
+             <returns></returns>
+        </member>
+        <member name="M:BackendApi.ControllersDomain.UserTrainingControllerAcess.Delete(System.Int32)">
+             <summary>
+             Удалить тренеровоки пользователя по уникальному-идентификатору(id).
+             </summary>
+             <remarks>
+             Пример запроса:
+            
+                 POST /UserTraining
+                 {
+                    "Id": 1,
+                 }
+            
+             </remarks>
+             <param name="model">Тренировки пользователя</param>
+             <returns></returns>
+        </member>
+    </members>
+</doc>
