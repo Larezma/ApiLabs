@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class UserToAchievement
 {
@@ -11,7 +11,7 @@ public partial class UserToAchievement
 
     public int AchievementsId { get; set; }
 
-    public DateTime GetDateAchievements { get; set; }
+    public DateTime? GetDateAchievements { get; set; }
 
     public virtual Achievement Achievements { get; set; } = null!;
 

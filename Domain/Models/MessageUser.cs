@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class MessageUser
 {
@@ -13,9 +13,9 @@ public partial class MessageUser
 
     public string MessageContent { get; set; } = null!;
 
-    public DateTime DateMessage { get; set; }
+    public DateTime? DateMessage { get; set; }
 
-    public DateTime DateUpMessage { get; set; }
+    public DateTime? DateUpMessage { get; set; }
 
     public virtual User Receiver { get; set; } = null!;
 

@@ -1,4 +1,4 @@
-﻿using DataAccess.Models;
+﻿using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,8 @@ namespace DataAccess.Repositories
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: class
     {
-        protected VitalityMasteryContext MasteryContext { get; set; }
-        public RepositoryBase (VitalityMasteryContext masteryContext)
+        protected VitalityMasteryTestContext MasteryContext { get; set; }
+        public RepositoryBase (VitalityMasteryTestContext masteryContext)
         {
             MasteryContext = masteryContext;
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class Dialog
 {
@@ -9,9 +9,9 @@ public partial class Dialog
 
     public string TextDialogs { get; set; } = null!;
 
-    public DateTime TimeCreate { get; set; }
+    public DateTime? TimeCreate { get; set; }
 
-    public DateTime EndTime { get; set; }
+    public DateTime? EndTime { get; set; }
 
     public virtual ICollection<UserToDialog> UserToDialogs { get; set; } = new List<UserToDialog>();
 }

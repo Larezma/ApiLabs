@@ -1,5 +1,5 @@
 ﻿using System;
-using DataAccess.Models;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +25,14 @@ namespace BusinessLogic.Services
 
         public async Task<MessageUser> GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var messageUsers = await _repositoryWrapper.MessageUsers
                 .FindByCondition(x => x.MessageId == id);
             return messageUsers.First();
@@ -32,18 +40,45 @@ namespace BusinessLogic.Services
 
         public async Task Create(MessageUser model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (!int.TryParse(model.SenderId.ToString(), out _) || !int.TryParse(model.ReceiverId.ToString(), out _) || string.IsNullOrEmpty(model.MessageContent))
+            {
+                throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
+            }
+
             await _repositoryWrapper.MessageUsers.Create(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Update(MessageUser model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (int.IsNegative(model.MessageId) || int.IsNegative(model.SenderId) || int.IsNegative(model.ReceiverId))
+            {
+                throw new ArgumentNullException("id не может быть отрицательным!");
+            }
             await _repositoryWrapper.MessageUsers.Update(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var messageUsers = await _repositoryWrapper.MessageUsers
                 .FindByCondition(x => x.MessageId == id);
 

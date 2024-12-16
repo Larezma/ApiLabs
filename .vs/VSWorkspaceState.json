@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\BackendApi",
+    "\\BackendApi\\Controllers",
+    "\\BusinessLogic",
+    "\\BusinessLogic.Tests",
+    "\\BusinessLogic.Tests\\\u0421onstructorService",
+    "\\BusinessLogic\\Services",
+    "\\DataAccess",
+    "\\DataAccess\\Migrations",
+    "\\Domain",
+    "\\Domain\\Models"
+  ],
+  "SelectedNode": "\\BusinessLogic\\Services\\UserToRuleService.cs",
+  "PreviewInSolutionExplorer": false
+}

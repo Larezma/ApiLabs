@@ -1,9 +1,11 @@
-using DataAccess.Models;
-using DataAccess.Wrapper;
 using BusinessLogic.Services;
-using Microsoft.EntityFrameworkCore;
+using Domain.Models;
+using DataAccess.Wrapper;
 using Domain.Interfaces.Service;
 using Domain.Interfaces.Wrapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace BackendApi
 {
@@ -13,7 +15,7 @@ namespace BackendApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<VitalityMasteryContext>(
+            builder.Services.AddDbContext<VitalityMasteryTestContext>(
                 options => options.UseSqlServer(builder.Configuration["ConnectionStrings"]));
 
 
@@ -42,7 +44,7 @@ namespace BackendApi
             builder.Services.AddScoped<IUserNutritionService, UserNutritionService>();
             builder.Services.AddScoped<ITrainersScheduleService, TrainersScheduleService>();
 
-            builder.Services.AddCors(o => o.AddPolicy("MyPolicy",builder =>
+            builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyMethod();
             }));
@@ -50,7 +52,29 @@ namespace BackendApi
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Проект Контроля питания и тренеровок социальной сети и отслеживания их достижений API",
+                    Description = "Описание ASP .NET Core web API",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Примеры работы проекта",
+                        Url = new Uri("https://inskill.ru/")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Пример Пример",
+                        Url = new Uri("https://inskill.ru/")
+                    }
+                });
+
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
 
             var app = builder.Build();
 

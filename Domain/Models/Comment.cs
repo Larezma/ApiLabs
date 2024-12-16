@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class Comment
 {
@@ -15,7 +15,7 @@ public partial class Comment
 
     public string CommentsText { get; set; } = null!;
 
-    public DateTime CommentsDate { get; set; }
+    public DateTime? CommentsDate { get; set; }
 
     public virtual User User { get; set; } = null!;
 }

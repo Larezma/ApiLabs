@@ -1,5 +1,5 @@
 ﻿using System;
-using DataAccess.Models;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +25,14 @@ namespace BusinessLogic.Services
 
         public async Task<Dialog> GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var dialogs = await _repositoryWrapper.Dialogs
                 .FindByCondition(x => x.DialogsId == id);
             return dialogs.First();
@@ -32,18 +40,44 @@ namespace BusinessLogic.Services
 
         public async Task Create(Dialog model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (!int.TryParse(model.DialogsId.ToString(), out _) || int.IsNegative(model.DialogsId) ||  string.IsNullOrEmpty(model.TextDialogs) ||  string.IsNullOrEmpty(model.TextDialogs))
+            {
+                throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
+            }
             await _repositoryWrapper.Dialogs.Create(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Update(Dialog model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (int.IsNegative(model.DialogsId) || string.IsNullOrEmpty(model.TextDialogs))
+            {
+                throw new ArgumentNullException("id не может быть отрицательным!");
+            }
             await _repositoryWrapper.Dialogs.Update(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var dialogs = await _repositoryWrapper.Dialogs
                 .FindByCondition(x => x.DialogsId == id);
 

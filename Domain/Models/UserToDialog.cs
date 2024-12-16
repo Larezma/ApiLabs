@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class UserToDialog
 {
@@ -11,7 +11,7 @@ public partial class UserToDialog
 
     public int UserId { get; set; }
 
-    public DateTime TimeCreate { get; set; }
+    public DateTime? TimeCreate { get; set; }
 
     public virtual Dialog Dialog { get; set; } = null!;
 

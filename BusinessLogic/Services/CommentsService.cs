@@ -1,5 +1,5 @@
 ﻿using System;
-using DataAccess.Models;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +25,14 @@ namespace BusinessLogic.Services
 
         public async Task<Comment> GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var comments = await _repositoryWrapper.Comments
                 .FindByCondition(x => x.CommentsId == id);
             return comments.First();
@@ -32,18 +40,45 @@ namespace BusinessLogic.Services
 
         public async Task Create(Comment model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (!int.TryParse(model.UserId.ToString(), out _) || !int.TryParse(model.ItemId.ToString(), out _) || !int.TryParse(model.ItemType.ToString(), out _) || string.IsNullOrEmpty(model.CommentsText) || int.IsNegative(model.UserId) || int.IsNegative(model.ItemId) || int.IsNegative(model.ItemType))
+            {
+                throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
+            }
+
             await _repositoryWrapper.Comments.Create(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Update(Comment model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (int.IsNegative(model.CommentsId) || int.IsNegative(model.UserId) || int.IsNegative(model.ItemId) || int.IsNegative(model.ItemType))
+            {
+                throw new ArgumentNullException("id не может быть отрицательным!");
+            }
             await _repositoryWrapper.Comments.Update(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var comments = await _repositoryWrapper.Comments
                 .FindByCondition(x => x.CommentsId == id);
 

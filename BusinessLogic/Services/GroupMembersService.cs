@@ -1,5 +1,5 @@
 ﻿using System;
-using DataAccess.Models;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +25,14 @@ namespace BusinessLogic.Services
 
         public async Task<GroupMember> GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var groupMembers = await _repositoryWrapper.GroupMembers
                 .FindByCondition(x => x.GroupsId == id);
             return groupMembers.First();
@@ -32,18 +40,44 @@ namespace BusinessLogic.Services
 
         public async Task Create(GroupMember model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (!int.TryParse(model.GroupsId.ToString(), out _) || !int.TryParse(model.UserId.ToString(), out _) || int.IsNegative(model.GroupsId) || int.IsNegative(model.UserId))
+            {
+                throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
+            }
             await _repositoryWrapper.GroupMembers.Create(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Update(GroupMember model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (int.IsNegative(model.GroupsId) || int.IsNegative(model.UserId))
+            {
+                throw new ArgumentNullException("id не может быть отрицательным!");
+            }
             await _repositoryWrapper.GroupMembers.Update(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var groupMembers = await _repositoryWrapper.GroupMembers
                 .FindByCondition(x => x.GroupsId == id);
 

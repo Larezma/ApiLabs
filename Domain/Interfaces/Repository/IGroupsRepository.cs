@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using DataAccess.Models;
+using Domain.Models;
 using Domain.Interfaces.Wrapper;
-using Group = DataAccess.Models.Group;
+using Group = Domain.Models.Group;
 
 namespace Domain.Interfaces.Repository
 {

@@ -1,5 +1,5 @@
 ﻿using System;
-using DataAccess.Models;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +25,14 @@ namespace BusinessLogic.Services
 
         public async Task<PhotoUser> GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var photoUsers = await _repositoryWrapper.PhotoUsers
                 .FindByCondition(x => x.PhotoId == id);
             return photoUsers.First();
@@ -32,18 +40,44 @@ namespace BusinessLogic.Services
 
         public async Task Create(PhotoUser model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (!decimal.TryParse(model.UserId.ToString(), out _) || string.IsNullOrEmpty(model.PhotoLink))
+            {
+                throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
+            }
             await _repositoryWrapper.PhotoUsers.Create(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Update(PhotoUser model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (int.IsNegative(model.PhotoId))
+            {
+                throw new ArgumentNullException("id не может быть отрицательным!");
+            }
             await _repositoryWrapper.PhotoUsers.Update(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var photoUsers = await _repositoryWrapper.PhotoUsers
                 .FindByCondition(x => x.PhotoId == id);
 

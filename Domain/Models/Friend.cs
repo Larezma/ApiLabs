@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class Friend
 {
@@ -11,7 +11,9 @@ public partial class Friend
 
     public int UserId2 { get; set; }
 
-    public DateTime StartDate { get; set; }
+    public DateTime? StartDate { get; set; }
 
     public virtual User UserId1Navigation { get; set; } = null!;
+
+    public virtual User UserId2Navigation { get; set; } = null!;
 }

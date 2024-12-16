@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class GroupMember
 {
@@ -9,7 +9,7 @@ public partial class GroupMember
 
     public int UserId { get; set; }
 
-    public DateTime JoinDate { get; set; }
+    public DateTime? JoinDate { get; set; }
 
     public virtual Group Groups { get; set; } = null!;
 

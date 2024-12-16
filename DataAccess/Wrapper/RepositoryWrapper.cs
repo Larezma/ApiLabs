@@ -1,4 +1,4 @@
-﻿using DataAccess.Models;
+﻿using Domain.Models;
 using DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace DataAccess.Wrapper
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        private VitalityMasteryContext _context;
+        private VitalityMasteryTestContext _context;
 
         private IUserRepository _user;
         private ITrainerRepository _trainer;
@@ -301,7 +301,7 @@ namespace DataAccess.Wrapper
             }
         }
 
-        public RepositoryWrapper(VitalityMasteryContext vitalityContext)
+        public RepositoryWrapper(VitalityMasteryTestContext vitalityContext)
         {
             _context = vitalityContext;
         }

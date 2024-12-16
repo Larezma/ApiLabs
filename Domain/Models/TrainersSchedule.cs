@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class TrainersSchedule
 {
@@ -13,11 +13,13 @@ public partial class TrainersSchedule
 
     public string? TypeOfTraining { get; set; }
 
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
 
-    public TimeOnly Time { get; set; }
+    public DateTime Time { get; set; }
 
-    public DateTime CreateAt { get; set; }
+    public DateTime? CreateAt { get; set; }
+
+    public DateTime? UpdateAt { get; set; }
 
     public virtual Schedule Schedule { get; set; } = null!;
 

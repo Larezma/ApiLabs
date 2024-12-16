@@ -1,5 +1,5 @@
 ﻿using System;
-using DataAccess.Models;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +25,14 @@ namespace BusinessLogic.Services
 
         public async Task<Product> GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var products = await _repositoryWrapper.Products
                 .FindByCondition(x => x.ProductId == id);
             return products.First();
@@ -32,18 +40,47 @@ namespace BusinessLogic.Services
 
         public async Task Create(Product model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (string.IsNullOrEmpty(model.Product1) || !decimal.TryParse(model.Calories.ToString(), out _) || !decimal.TryParse(model.ProteinPer.ToString(), out _) 
+                || !decimal.TryParse(model.FatPer.ToString(), out _) || !decimal.TryParse(model.CarbsPer.ToString(), out _) || string.IsNullOrEmpty(model.VitaminsAndMinerals) 
+                || string.IsNullOrEmpty(model.NutritionalValue))
+            {
+                throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
+            }
+
             await _repositoryWrapper.Products.Create(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Update(Product model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (int.IsNegative(model.ProductId))
+            {
+                throw new ArgumentNullException("id не может быть отрицательным!");
+            }
             await _repositoryWrapper.Products.Update(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var products = await _repositoryWrapper.Products
                 .FindByCondition(x => x.ProductId == id);
 

@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces.Repository;
-using DataAccess.Models;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace DataAccess.Repositories
 {
     internal class UserNutritionRepository : RepositoryBase<UserNutrition> , IUserNutritionRepository
     {
-        public UserNutritionRepository(VitalityMasteryContext masteryContext) : base(masteryContext)
+        public UserNutritionRepository(VitalityMasteryTestContext masteryContext) : base(masteryContext)
         {
         }
     }

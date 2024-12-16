@@ -1,5 +1,5 @@
 ﻿using System;
-using DataAccess.Models;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +25,14 @@ namespace BusinessLogic.Services
 
         public async Task<UserToRule> GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var userToRules = await _repositoryWrapper.UserToRule
                 .FindByCondition(x => x.Id == id);
             return userToRules.First();
@@ -32,18 +40,44 @@ namespace BusinessLogic.Services
 
         public async Task Create(UserToRule model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId) || int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId))
+            {
+                throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
+            }
             await _repositoryWrapper.UserToRule.Create(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Update(UserToRule model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId))
+            {
+                throw new ArgumentNullException("id не может быть отрицательным!");
+            }
             await _repositoryWrapper.UserToRule.Update(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var userToRules = await _repositoryWrapper.UserToRule
                 .FindByCondition(x => x.Id == id);
 

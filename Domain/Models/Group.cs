@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class Group
 {
@@ -11,7 +11,7 @@ public partial class Group
 
     public string GroupsName { get; set; } = null!;
 
-    public DateTime CreateDate { get; set; }
+    public DateTime? CreateDate { get; set; }
 
     public DateTime? UpdateGroups { get; set; }
 

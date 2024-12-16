@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces.Repository;
-using DataAccess.Models;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace DataAccess.Repositories
 {
     internal class CommentsRepository : RepositoryBase<Comment> , ICommentsRepository
     {
-        public CommentsRepository(VitalityMasteryContext masteryContext) : base(masteryContext)
+        public CommentsRepository(VitalityMasteryTestContext masteryContext) : base(masteryContext)
         {
         }
     }

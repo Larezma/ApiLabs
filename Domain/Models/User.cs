@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class User
 {
     public int UserId { get; set; }
 
-    public string? UserName { get; set; }
+    public string UserName { get; set; } = null!;
 
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
-    public string? Password { get; set; }
+    public string Password { get; set; } = null!;
 
     public int? RoleUser { get; set; }
 
@@ -21,13 +21,15 @@ public partial class User
 
     public DateTime? UpdateAt { get; set; }
 
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } = null!;
 
     public string? AboutMe { get; set; }
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-    public virtual ICollection<Friend> Friends { get; set; } = new List<Friend>();
+    public virtual ICollection<Friend> FriendUserId1Navigations { get; set; } = new List<Friend>();
+
+    public virtual ICollection<Friend> FriendUserId2Navigations { get; set; } = new List<Friend>();
 
     public virtual Group? Group { get; set; }
 
@@ -40,8 +42,6 @@ public partial class User
     public virtual ICollection<PhotoUser> PhotoUsers { get; set; } = new List<PhotoUser>();
 
     public virtual ICollection<Publication> Publications { get; set; } = new List<Publication>();
-
-    public virtual ICollection<Trainer> Trainers { get; set; } = new List<Trainer>();
 
     public virtual ICollection<UserNutrition> UserNutritions { get; set; } = new List<UserNutrition>();
 

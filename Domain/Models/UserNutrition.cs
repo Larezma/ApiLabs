@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class UserNutrition
 {
@@ -11,15 +11,15 @@ public partial class UserNutrition
 
     public int NutritionId { get; set; }
 
-    public DateOnly DateOfAdmission { get; set; }
+    public DateTime DateOfAdmission { get; set; }
 
-    public TimeOnly AppointmentTime { get; set; }
+    public DateTime AppointmentTime { get; set; }
 
     public string NutritionType { get; set; } = null!;
 
     public string Report { get; set; } = null!;
 
-    public DateTime CreateAt { get; set; }
+    public DateTime? CreateAt { get; set; }
 
     public virtual Nutrition Nutrition { get; set; } = null!;
 

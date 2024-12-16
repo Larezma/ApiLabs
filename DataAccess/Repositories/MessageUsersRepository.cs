@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces.Repository;
-using DataAccess.Models;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace DataAccess.Repositories
 {
     internal class MessageUsersRepository : RepositoryBase<MessageUser> , IMessageUsersRepository
     {
-        public MessageUsersRepository(VitalityMasteryContext masteryContext) : base(masteryContext)
+        public MessageUsersRepository(VitalityMasteryTestContext masteryContext) : base(masteryContext)
         {
         }
     }

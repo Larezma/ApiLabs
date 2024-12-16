@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces.Repository;
-using DataAccess.Models;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace DataAccess.Repositories
 {
     internal class GroupsRepository : RepositoryBase<Group> , IGroupsRepository
     {
-        public GroupsRepository(VitalityMasteryContext masteryContext) : base(masteryContext)
+        public GroupsRepository(VitalityMasteryTestContext masteryContext) : base(masteryContext)
         {
         }
     }

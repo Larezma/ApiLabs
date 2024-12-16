@@ -1,5 +1,5 @@
 ﻿using System;
-using DataAccess.Models;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +25,14 @@ namespace BusinessLogic.Services
 
         public async Task<UserTraining> GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var userTraining = await _repositoryWrapper.UserTraining
                 .FindByCondition(x => x.Id == id);
             return userTraining.First();
@@ -32,18 +40,45 @@ namespace BusinessLogic.Services
 
         public async Task Create(UserTraining model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (!int.TryParse(model.TrainingId.ToString(), out _) || !int.TryParse(model.UserId.ToString(), out _) || !int.TryParse(model.TrainerId.ToString(), out _) 
+                || string.IsNullOrEmpty(model.DayOfWeek) || string.IsNullOrEmpty(model.Duration)  || int.IsNegative(model.TrainingId) || int.IsNegative(model.UserId) || int.IsNegative(model.TrainerId))
+            {
+                throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
+            }
             await _repositoryWrapper.UserTraining.Create(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Update(UserTraining model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (int.IsNegative(model.Id) || int.IsNegative(model.TrainingId) || int.IsNegative(model.UserId) || int.IsNegative(model.TrainerId))
+            {
+                throw new ArgumentNullException("id не может быть отрицательным!");
+            }
             await _repositoryWrapper.UserTraining.Update(model);
             await _repositoryWrapper.Save();
         }
 
         public async Task Delete(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+            }
+            else if (id > int.MaxValue)
+            {
+                throw new ArgumentNullException("id не может превышать лимит int!");
+            }
             var userTraining = await _repositoryWrapper.UserTraining
                 .FindByCondition(x => x.Id == id);
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models;
+namespace Domain.Models;
 
 public partial class Schedule
 {
@@ -19,5 +19,9 @@ public partial class Schedule
 
     public DateTime EndTime { get; set; }
 
+    public virtual Trainer Trainer { get; set; } = null!;
+
     public virtual ICollection<TrainersSchedule> TrainersSchedules { get; set; } = new List<TrainersSchedule>();
+
+    public virtual Training Training { get; set; } = null!;
 }
