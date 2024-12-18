@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "63dr22wHSNI=",
+  "dgSpecHash": "kV5GdPe7hFU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic.Tests\\BusinessLogic.Tests.csproj",
+  "projectFilePath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic.Tests\\BusinessLogic.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Otec\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\Otec\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",

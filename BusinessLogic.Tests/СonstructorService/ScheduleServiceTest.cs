@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -17,7 +17,7 @@ namespace BusinessLogic.Tests.СonstructorService
     public class ScheduleServiceTest
     {
         private readonly ScheduleService service;
-        private readonly Mock<IScheduleRepository> ScheduleRepositoryMoq;
+        private readonly Mock<IScheduleRepository> scheduleRepositoryMoq;
 
         public static IEnumerable<object[]> CreateIncorrectSchedule()
         {
@@ -42,8 +42,8 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new Schedule() { ScheduleId=0, TrainingId=4,TrainerId = 1,TrainingType="dss", DayOfWeek="sdds",StartTime= new DateTime(2015, 7, 20, 18, 30, 25),EndTime= new DateTime(2015, 7, 20, 18, 30, 25) } },
-                new object[] { new Schedule() { ScheduleId=-1, TrainingId=4,TrainerId = 1,TrainingType="dss", DayOfWeek="sdds",StartTime= new DateTime(2015, 7, 20, 18, 30, 25),EndTime= new DateTime(2015, 7, 20, 18, 30, 25) } },
+                new object[] { new Schedule() { ScheduleId=0, TrainingId=4,TrainerId = 1,TrainingType="", DayOfWeek="sdds",StartTime= new DateTime(2015, 7, 20, 18, 30, 25),EndTime= new DateTime(2015, 7, 20, 18, 30, 25) } },
+                new object[] { new Schedule() { ScheduleId=-1, TrainingId=4,TrainerId = 1,TrainingType="dss", DayOfWeek="",StartTime= new DateTime(2015, 7, 20, 18, 30, 25),EndTime= new DateTime(2015, 7, 20, 18, 30, 25) } },
             };
         }
 
@@ -60,9 +60,9 @@ namespace BusinessLogic.Tests.СonstructorService
         public ScheduleServiceTest()
         {
             var repositoryWrapperMoq = new Mock<IRepositoryWrapper>();
-            ScheduleRepositoryMoq = new Mock<IScheduleRepository>();
+            scheduleRepositoryMoq = new Mock<IScheduleRepository>();
 
-            repositoryWrapperMoq.Setup(x => x.Schedule).Returns(ScheduleRepositoryMoq.Object);
+            repositoryWrapperMoq.Setup(x => x.Schedule).Returns(scheduleRepositoryMoq.Object);
 
             service = new ScheduleService(repositoryWrapperMoq.Object);
         }
@@ -71,7 +71,7 @@ namespace BusinessLogic.Tests.СonstructorService
         public async Task GetALL()
         {
             await service.GetAll();
-            ScheduleRepositoryMoq.Verify(x => x.FindALL());
+            scheduleRepositoryMoq.Verify(x => x.FindALL());
         }
 
 
@@ -79,28 +79,29 @@ namespace BusinessLogic.Tests.СonstructorService
         [MemberData(nameof(GetCorrectSchedule))]
         public async Task GetById_correct(Schedule Schedule)
         {
-            ScheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>())).ReturnsAsync(new List<Schedule> { Schedule });
+            scheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>())).ReturnsAsync(new List<Schedule> { Schedule });
 
             // Act
             var result = await service.GetById(Schedule.ScheduleId);
 
             // Assert
             Assert.Equal(Schedule.ScheduleId, result.ScheduleId);
-            ScheduleRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>()), Times.Once);
+            scheduleRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>()), Times.Once);
         }
 
         [Theory]
         [MemberData(nameof(GetIncorrectSchedule))]
         public async Task GetByid_incorrect(Schedule Schedule)
         {
-            ScheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>())).ReturnsAsync(new List<Schedule> { Schedule });
+            scheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>())).ReturnsAsync(new List<Schedule> { Schedule });
 
             // Act
-            var result = await service.GetById(Schedule.ScheduleId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Schedule.ScheduleId));
 
             // Assert
-            Assert.Equal(Schedule.ScheduleId, result.ScheduleId);
-            ScheduleRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>()), Times.Once);
+            scheduleRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
+
         }
 
         [Theory]
@@ -111,7 +112,7 @@ namespace BusinessLogic.Tests.СonstructorService
             var newSchedule = Schedule;
 
             await service.Create(newSchedule);
-            ScheduleRepositoryMoq.Verify(x => x.Create(It.IsAny<Schedule>()), Times.Once);
+            scheduleRepositoryMoq.Verify(x => x.Create(It.IsAny<Schedule>()), Times.Once);
         }
 
         [Theory]
@@ -119,10 +120,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewScheduleShouldNotCreateNewSchedule_incorrect(Schedule Schedule)
         {
-            var newSchedule = Schedule;
-
-            await service.Create(newSchedule);
-            ScheduleRepositoryMoq.Verify(x => x.Create(It.IsAny<Schedule>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Schedule));
+            scheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<Schedule>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -133,7 +133,7 @@ namespace BusinessLogic.Tests.СonstructorService
             var newSchedule = Schedule;
 
             await service.Update(newSchedule);
-            ScheduleRepositoryMoq.Verify(x => x.Update(It.IsAny<Schedule>()), Times.Once);
+            scheduleRepositoryMoq.Verify(x => x.Update(It.IsAny<Schedule>()), Times.Once);
         }
 
         [Theory]
@@ -141,10 +141,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldSchedule_incorrect(Schedule Schedule)
         {
-            var newSchedule = Schedule;
-
-            await service.Update(newSchedule);
-            ScheduleRepositoryMoq.Verify(x => x.Update(It.IsAny<Schedule>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Schedule));
+            scheduleRepositoryMoq.Verify(x => x.Update(It.IsAny<Schedule>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -152,12 +151,12 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task DeleteAsyncOldSchedule_correct(Schedule Schedule)
         {
-            ScheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>())).ReturnsAsync(new List<Schedule> { Schedule });
+            scheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>())).ReturnsAsync(new List<Schedule> { Schedule });
 
             await service.Delete(Schedule.ScheduleId);
 
-            ScheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<Schedule>()), Times.Once);
             var result = await service.GetById(Schedule.ScheduleId);
+            scheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<Schedule>()), Times.Once);
             Assert.Equal(Schedule.ScheduleId, result.ScheduleId);
         }
 
@@ -167,13 +166,11 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task DeleteAsyncOldSchedule_incorrect(Schedule Schedule)
         {
-            ScheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>())).ReturnsAsync(new List<Schedule> { Schedule });
+            scheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Schedule, bool>>>())).ReturnsAsync(new List<Schedule> { Schedule });
 
-            await service.Delete(Schedule.ScheduleId);
-
-            ScheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<Schedule>()), Times.Once);
-            var result = await service.GetById(Schedule.ScheduleId);
-            Assert.Equal(Schedule.ScheduleId, result.ScheduleId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Schedule.ScheduleId));
+            scheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<Schedule>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -24,8 +24,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new UserToDialog() {DialogId = 0, UserId = 0 } },
-                new object[] { new UserToDialog() {DialogId = -1, UserId = 0 } },
-                new object[] { new UserToDialog() {DialogId = 3, UserId = -1 } },
+                new object[] { new UserToDialog() {DialogId = -1, UserId = -1 } },
             };
         }
 
@@ -43,8 +42,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new UserToDialog() {Id = 0, DialogId = 0, UserId = 0 } },
-                new object[] { new UserToDialog() {Id =-1, DialogId = -1, UserId = 0 } },
-                new object[] { new UserToDialog() {Id = 3, DialogId = 0, UserId = -1 } },
+                new object[] { new UserToDialog() {Id =-1, DialogId = -1, UserId = -1 } },
             };
         }
 
@@ -84,10 +82,10 @@ namespace BusinessLogic.Tests.СonstructorService
             UserToDialogRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserToDialog, bool>>>())).ReturnsAsync(new List<UserToDialog> { UserToDialog });
 
             // Act
-            var result = await service.GetById(UserToDialog.Id);
+            var result = await service.GetById(UserToDialog.UserId);
 
             // Assert
-            Assert.Equal(UserToDialog.Id, result.Id);
+            Assert.Equal(UserToDialog.UserId, result.UserId);
             UserToDialogRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<UserToDialog, bool>>>()), Times.Once);
         }
 
@@ -98,11 +96,11 @@ namespace BusinessLogic.Tests.СonstructorService
             UserToDialogRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserToDialog, bool>>>())).ReturnsAsync(new List<UserToDialog> { UserToDialog });
 
             // Act
-            var result = await service.GetById(UserToDialog.Id);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(UserToDialog.UserId));
 
             // Assert
-            Assert.Equal(UserToDialog.Id, result.Id);
-            UserToDialogRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<UserToDialog, bool>>>()), Times.Once);
+            UserToDialogRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<UserToDialog, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -121,10 +119,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewUserToDialogShouldNotCreateNewUserToDialog_incorrect(UserToDialog UserToDialog)
         {
-            var newUserToDialog = UserToDialog;
-
-            await service.Create(newUserToDialog);
-            UserToDialogRepositoryMoq.Verify(x => x.Create(It.IsAny<UserToDialog>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(UserToDialog));
+            UserToDialogRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserToDialog>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -143,10 +140,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldUserToDialog_incorrect(UserToDialog UserToDialog)
         {
-            var newUserToDialog = UserToDialog;
-
-            await service.Update(newUserToDialog);
-            UserToDialogRepositoryMoq.Verify(x => x.Update(It.IsAny<UserToDialog>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(UserToDialog));
+            UserToDialogRepositoryMoq.Verify(x => x.Update(It.IsAny<UserToDialog>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -156,11 +152,11 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             UserToDialogRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserToDialog, bool>>>())).ReturnsAsync(new List<UserToDialog> { UserToDialog });
 
-            await service.Delete(UserToDialog.Id);
+            await service.Delete(UserToDialog.UserId);
 
+            var result = await service.GetById(UserToDialog.UserId);
             UserToDialogRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserToDialog>()), Times.Once);
-            var result = await service.GetById(UserToDialog.Id);
-            Assert.Equal(UserToDialog.Id, result.Id);
+            Assert.Equal(UserToDialog.UserId, result.UserId);
         }
 
 
@@ -171,12 +167,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             UserToDialogRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserToDialog, bool>>>())).ReturnsAsync(new List<UserToDialog> { UserToDialog });
 
-            await service.Delete(UserToDialog.Id);
-
-            UserToDialogRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserToDialog>()), Times.Once);
-            var result = await service.GetById(UserToDialog.Id);
-            Assert.Equal(UserToDialog.Id, result.Id);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(UserToDialog.UserId));
+            UserToDialogRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserToDialog>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
-
     }
 }

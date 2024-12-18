@@ -1,17 +1,17 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
+using System.Numerics;
 
 namespace BusinessLogic.Tests.СonstructorService
 {
@@ -24,9 +24,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new Publication() { UsersId=0,PublicationText="",PublicationsImage="" } },
-                new object[] { new Publication() { UsersId=-1,PublicationText="",PublicationsImage="sds" } },
-                new object[] { new Publication() { UsersId=int.MaxValue,PublicationText="",PublicationsImage="" } },
+                new object[] { new Publication() { PublicationsId=0,PublicationText="",PublicationsImage="" } },
+                new object[] { new Publication() { PublicationsId=-1,PublicationText="",PublicationsImage="sds" } },
+                new object[] { new Publication() { PublicationsId=int.MaxValue,PublicationText="",PublicationsImage="" } },
             };
         }
 
@@ -34,9 +34,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new Publication() { UsersId=1,PublicationText="sdds",PublicationsImage= "sdds" } },
-                new object[] { new Publication() { UsersId=2,PublicationText="1233",PublicationsImage= "1233" } },
-                new object[] { new Publication() { UsersId=3,PublicationText="!!!!",PublicationsImage="" } },
+                new object[] { new Publication() { PublicationsId=1,PublicationText="sdds",PublicationsImage= "sdds" } },
+                new object[] { new Publication() { PublicationsId=2,PublicationText="1233",PublicationsImage= "1233" } },
+                new object[] { new Publication() { PublicationsId=3,PublicationText="!!!!",PublicationsImage="" } },
             };
         }
         public static IEnumerable<object[]> GetIncorrectPublication()
@@ -97,11 +97,12 @@ namespace BusinessLogic.Tests.СonstructorService
             PublicationRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Publication, bool>>>())).ReturnsAsync(new List<Publication> { Publication });
 
             // Act
-            var result = await service.GetById(Publication.PublicationsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Publication.PublicationsId));
 
             // Assert
-            Assert.Equal(Publication.PublicationsId, result.PublicationsId);
-            PublicationRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Publication, bool>>>()), Times.Once);
+            PublicationRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Publication, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
+
         }
 
         [Theory]
@@ -120,10 +121,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewPublicationShouldNotCreateNewPublication_incorrect(Publication Publication)
         {
-            var newPublication = Publication;
-
-            await service.Create(newPublication);
-            PublicationRepositoryMoq.Verify(x => x.Create(It.IsAny<Publication>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Publication));
+            PublicationRepositoryMoq.Verify(x => x.Delete(It.IsAny<Publication>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -142,10 +142,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldPublication_incorrect(Publication Publication)
         {
-            var newPublication = Publication;
-
-            await service.Update(newPublication);
-            PublicationRepositoryMoq.Verify(x => x.Update(It.IsAny<Publication>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Publication));
+            PublicationRepositoryMoq.Verify(x => x.Update(It.IsAny<Publication>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -157,8 +156,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(Publication.PublicationsId);
 
-            PublicationRepositoryMoq.Verify(x => x.Delete(It.IsAny<Publication>()), Times.Once);
             var result = await service.GetById(Publication.PublicationsId);
+            PublicationRepositoryMoq.Verify(x => x.Delete(It.IsAny<Publication>()), Times.Once);
             Assert.Equal(Publication.PublicationsId, result.PublicationsId);
         }
 
@@ -170,11 +169,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             PublicationRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Publication, bool>>>())).ReturnsAsync(new List<Publication> { Publication });
 
-            await service.Delete(Publication.PublicationsId);
-
-            PublicationRepositoryMoq.Verify(x => x.Delete(It.IsAny<Publication>()), Times.Once);
-            var result = await service.GetById(Publication.PublicationsId);
-            Assert.Equal(Publication.PublicationsId, result.PublicationsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Publication.PublicationsId));
+            PublicationRepositoryMoq.Verify(x => x.Delete(It.IsAny<Publication>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

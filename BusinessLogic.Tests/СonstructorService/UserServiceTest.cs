@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -56,7 +56,6 @@ namespace BusinessLogic.Tests.СonstructorService
             };
         }
 
-
         public UserServiceTest()
         {
             var repositoryWrapperMoq = new Mock<IRepositoryWrapper>();
@@ -96,11 +95,11 @@ namespace BusinessLogic.Tests.СonstructorService
             userRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<User, bool>>>())).ReturnsAsync(new List<User> { user });
 
             // Act
-            var result = await service.GetById(user.UserId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException> (() =>  service.GetById(user.UserId));
 
             // Assert
-            Assert.Equal(user.UserId, result.UserId);
-            userRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<User, bool>>>()), Times.Once);
+            userRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<User, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -119,10 +118,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewUserShouldNotCreateNewUser_incorrect(User user)
         {
-            var newUser = user;
-
-            await service.Create(newUser);
-            userRepositoryMoq.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(user));
+            userRepositoryMoq.Verify(x => x.Delete(It.IsAny<User>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -141,10 +139,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldUser_incorrect(User user)
         {
-            var newUser = user;
-
-            await service.Update(newUser);
-            userRepositoryMoq.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(user));
+            userRepositoryMoq.Verify(x => x.Update(It.IsAny<User>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -156,8 +153,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(user.UserId);
 
-            userRepositoryMoq.Verify(x => x.Delete(It.IsAny<User>()), Times.Once);
             var result = await service.GetById(user.UserId);
+            userRepositoryMoq.Verify(x => x.Delete(It.IsAny<User>()), Times.Once);
             Assert.Equal(user.UserId, result.UserId);
         }
 
@@ -169,12 +166,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             userRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<User, bool>>>())).ReturnsAsync(new List<User> { user });
 
-            await service.Delete(user.UserId);
-
-            userRepositoryMoq.Verify(x => x.Delete(It.IsAny<User>()), Times.Once);
-            var result = await service.GetById(user.UserId);
-            Assert.Equal(user.UserId, result.UserId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(user.UserId));
+            userRepositoryMoq.Verify(x => x.Delete(It.IsAny<User>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
-
     }
 }

@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -17,7 +17,7 @@ namespace BusinessLogic.Tests.СonstructorService
     public class ProductServiceTest
     {
         private readonly ProductsService service;
-        private readonly Mock<IProductsRepository> ProductRepositoryMoq;
+        private readonly Mock<IProductsRepository> productRepositoryMoq;
 
         public static IEnumerable<object[]> CreateIncorrectProduct()
         {
@@ -60,9 +60,9 @@ namespace BusinessLogic.Tests.СonstructorService
         public ProductServiceTest()
         {
             var repositoryWrapperMoq = new Mock<IRepositoryWrapper>();
-            ProductRepositoryMoq = new Mock<IProductsRepository>();
+            productRepositoryMoq = new Mock<IProductsRepository>();
 
-            repositoryWrapperMoq.Setup(x => x.Products).Returns(ProductRepositoryMoq.Object);
+            repositoryWrapperMoq.Setup(x => x.Products).Returns(productRepositoryMoq.Object);
 
             service = new ProductsService(repositoryWrapperMoq.Object);
         }
@@ -71,7 +71,7 @@ namespace BusinessLogic.Tests.СonstructorService
         public async Task GetALL()
         {
             await service.GetAll();
-            ProductRepositoryMoq.Verify(x => x.FindALL());
+            productRepositoryMoq.Verify(x => x.FindALL());
         }
 
 
@@ -79,28 +79,29 @@ namespace BusinessLogic.Tests.СonstructorService
         [MemberData(nameof(GetCorrectProduct))]
         public async Task GetById_correct(Product Product)
         {
-            ProductRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>())).ReturnsAsync(new List<Product> { Product });
+            productRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>())).ReturnsAsync(new List<Product> { Product });
 
             // Act
             var result = await service.GetById(Product.ProductId);
 
             // Assert
             Assert.Equal(Product.ProductId, result.ProductId);
-            ProductRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>()), Times.Once);
+            productRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>()), Times.Once);
         }
 
         [Theory]
         [MemberData(nameof(GetIncorrectProduct))]
         public async Task GetByid_incorrect(Product Product)
         {
-            ProductRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>())).ReturnsAsync(new List<Product> { Product });
+            productRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>())).ReturnsAsync(new List<Product> { Product });
 
             // Act
-            var result = await service.GetById(Product.ProductId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Product.ProductId));
 
             // Assert
-            Assert.Equal(Product.ProductId, result.ProductId);
-            ProductRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>()), Times.Once);
+            productRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
+
         }
 
         [Theory]
@@ -111,7 +112,7 @@ namespace BusinessLogic.Tests.СonstructorService
             var newProduct = Product;
 
             await service.Create(newProduct);
-            ProductRepositoryMoq.Verify(x => x.Create(It.IsAny<Product>()), Times.Once);
+            productRepositoryMoq.Verify(x => x.Create(It.IsAny<Product>()), Times.Once);
         }
 
         [Theory]
@@ -119,10 +120,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewProductShouldNotCreateNewProduct_incorrect(Product Product)
         {
-            var newProduct = Product;
-
-            await service.Create(newProduct);
-            ProductRepositoryMoq.Verify(x => x.Create(It.IsAny<Product>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Product));
+            productRepositoryMoq.Verify(x => x.Delete(It.IsAny<Product>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -133,7 +133,7 @@ namespace BusinessLogic.Tests.СonstructorService
             var newProduct = Product;
 
             await service.Update(newProduct);
-            ProductRepositoryMoq.Verify(x => x.Update(It.IsAny<Product>()), Times.Once);
+            productRepositoryMoq.Verify(x => x.Update(It.IsAny<Product>()), Times.Once);
         }
 
         [Theory]
@@ -141,10 +141,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldProduct_incorrect(Product Product)
         {
-            var newProduct = Product;
-
-            await service.Update(newProduct);
-            ProductRepositoryMoq.Verify(x => x.Update(It.IsAny<Product>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Product));
+            productRepositoryMoq.Verify(x => x.Update(It.IsAny<Product>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -152,12 +151,12 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task DeleteAsyncOldProduct_correct(Product Product)
         {
-            ProductRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>())).ReturnsAsync(new List<Product> { Product });
+            productRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>())).ReturnsAsync(new List<Product> { Product });
 
             await service.Delete(Product.ProductId);
 
-            ProductRepositoryMoq.Verify(x => x.Delete(It.IsAny<Product>()), Times.Once);
             var result = await service.GetById(Product.ProductId);
+            productRepositoryMoq.Verify(x => x.Delete(It.IsAny<Product>()), Times.Once);
             Assert.Equal(Product.ProductId, result.ProductId);
         }
 
@@ -167,13 +166,11 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task DeleteAsyncOldProduct_incorrect(Product Product)
         {
-            ProductRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>())).ReturnsAsync(new List<Product> { Product });
+            productRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Product, bool>>>())).ReturnsAsync(new List<Product> { Product });
 
-            await service.Delete(Product.ProductId);
-
-            ProductRepositoryMoq.Verify(x => x.Delete(It.IsAny<Product>()), Times.Once);
-            var result = await service.GetById(Product.ProductId);
-            Assert.Equal(Product.ProductId, result.ProductId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Product.ProductId));
+            productRepositoryMoq.Verify(x => x.Delete(It.IsAny<Product>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

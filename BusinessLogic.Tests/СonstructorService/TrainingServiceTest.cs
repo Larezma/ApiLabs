@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -56,7 +56,6 @@ namespace BusinessLogic.Tests.СonstructorService
             };
         }
 
-
         public TrainingServiceTest()
         {
             var repositoryWrapperMoq = new Mock<IRepositoryWrapper>();
@@ -96,11 +95,12 @@ namespace BusinessLogic.Tests.СonstructorService
             trainingRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Training, bool>>>())).ReturnsAsync(new List<Training> { Training });
 
             // Act
-            var result = await service.GetById(Training.TrainingId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Training.TrainingId));
 
             // Assert
-            Assert.Equal(Training.TrainingId, result.TrainingId);
-            trainingRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Training, bool>>>()), Times.Once);
+            trainingRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Training, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
+
         }
 
         [Theory]
@@ -119,10 +119,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewTrainingShouldNotCreateNewTraining_incorrect(Training Training)
         {
-            var newTraining = Training;
-
-            await service.Create(newTraining);
-            trainingRepositoryMoq.Verify(x => x.Create(It.IsAny<Training>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Training));
+            trainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<Training>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -141,10 +140,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldTraining_incorrect(Training Training)
         {
-            var newTraining = Training;
-
-            await service.Update(newTraining);
-            trainingRepositoryMoq.Verify(x => x.Update(It.IsAny<Training>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Training));
+            trainingRepositoryMoq.Verify(x => x.Update(It.IsAny<Training>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -156,8 +154,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(Training.TrainingId);
 
-            trainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<Training>()), Times.Once);
             var result = await service.GetById(Training.TrainingId);
+            trainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<Training>()), Times.Once);
             Assert.Equal(Training.TrainingId, result.TrainingId);
         }
 
@@ -169,11 +167,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             trainingRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Training, bool>>>())).ReturnsAsync(new List<Training> { Training });
 
-            await service.Delete(Training.TrainingId);
-
-            trainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<Training>()), Times.Once);
-            var result = await service.GetById(Training.TrainingId);
-            Assert.Equal(Training.TrainingId, result.TrainingId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Training.TrainingId));
+            trainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<Training>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

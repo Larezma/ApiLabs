@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -56,7 +56,6 @@ namespace BusinessLogic.Tests.СonstructorService
             };
         }
 
-
         public TrainerServiceTest()
         {
             var repositoryWrapperMoq = new Mock<IRepositoryWrapper>();
@@ -77,15 +76,15 @@ namespace BusinessLogic.Tests.СonstructorService
 
         [Theory]
         [MemberData(nameof(GetCorrectTrainer))]
-        public async Task GetById_correct(Trainer trainer)
+        public async Task GetById_correct(Trainer Trainer)
         {
-            trainerRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Trainer, bool>>>())).ReturnsAsync(new List<Trainer> { trainer });
+            trainerRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Trainer, bool>>>())).ReturnsAsync(new List<Trainer> { Trainer });
 
             // Act
-            var result = await service.GetById(trainer.TrainerId);
+            var result = await service.GetById(Trainer.TrainerId);
 
             // Assert
-            Assert.Equal(trainer.TrainerId, result.TrainerId);
+            Assert.Equal(Trainer.TrainerId, result.TrainerId);
             trainerRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Trainer, bool>>>()), Times.Once);
         }
 
@@ -96,11 +95,12 @@ namespace BusinessLogic.Tests.СonstructorService
             trainerRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Trainer, bool>>>())).ReturnsAsync(new List<Trainer> { Trainer });
 
             // Act
-            var result = await service.GetById(Trainer.TrainerId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Trainer.TrainerId));
 
             // Assert
-            Assert.Equal(Trainer.TrainerId, result.TrainerId);
-            trainerRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Trainer, bool>>>()), Times.Once);
+            trainerRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Trainer, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
+
         }
 
         [Theory]
@@ -119,10 +119,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewTrainerShouldNotCreateNewTrainer_incorrect(Trainer Trainer)
         {
-            var newTrainer = Trainer;
-
-            await service.Create(newTrainer);
-            trainerRepositoryMoq.Verify(x => x.Create(It.IsAny<Trainer>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Trainer));
+            trainerRepositoryMoq.Verify(x => x.Delete(It.IsAny<Trainer>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -141,10 +140,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldTrainer_incorrect(Trainer Trainer)
         {
-            var newTrainer = Trainer;
-
-            await service.Update(newTrainer);
-            trainerRepositoryMoq.Verify(x => x.Update(It.IsAny<Trainer>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Trainer));
+            trainerRepositoryMoq.Verify(x => x.Update(It.IsAny<Trainer>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -156,8 +154,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(Trainer.TrainerId);
 
-            trainerRepositoryMoq.Verify(x => x.Delete(It.IsAny<Trainer>()), Times.Once);
             var result = await service.GetById(Trainer.TrainerId);
+            trainerRepositoryMoq.Verify(x => x.Delete(It.IsAny<Trainer>()), Times.Once);
             Assert.Equal(Trainer.TrainerId, result.TrainerId);
         }
 
@@ -169,11 +167,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             trainerRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Trainer, bool>>>())).ReturnsAsync(new List<Trainer> { Trainer });
 
-            await service.Delete(Trainer.TrainerId);
-
-            trainerRepositoryMoq.Verify(x => x.Delete(It.IsAny<Trainer>()), Times.Once);
-            var result = await service.GetById(Trainer.TrainerId);
-            Assert.Equal(Trainer.TrainerId, result.TrainerId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Trainer.TrainerId));
+            trainerRepositoryMoq.Verify(x => x.Delete(It.IsAny<Trainer>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

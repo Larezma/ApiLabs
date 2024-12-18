@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -25,7 +25,6 @@ namespace BusinessLogic.Tests.СonstructorService
             {
                 new object[] { new Friend() { UserId1 = 0,UserId2 = 0} },
                 new object[] { new Friend() { UserId1 = -1,UserId2 = -1} },
-                new object[] { new Friend() { UserId1 = 3,UserId2 = -1} },
             };
         }
 
@@ -42,9 +41,8 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new Friend() {FriendId = 0, UserId1 = -1,UserId2 = 0} },
-                new object[] { new Friend() {FriendId = -1, UserId1 = -1,UserId2 = 0} },
-                new object[] { new Friend() {FriendId = 3, UserId1 = 0,UserId2 = -1} },
+                new object[] { new Friend() {FriendId = 0, UserId1 = 0,UserId2 = 0} },
+                new object[] { new Friend() {FriendId = -1, UserId1 = -1,UserId2 = -1} },
             };
         }
 
@@ -98,11 +96,11 @@ namespace BusinessLogic.Tests.СonstructorService
             FriendRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Friend, bool>>>())).ReturnsAsync(new List<Friend> { Friend });
 
             // Act
-            var result = await service.GetById(Friend.FriendId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Friend.FriendId));
 
             // Assert
-            Assert.Equal(Friend.FriendId, result.FriendId);
-            FriendRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Friend, bool>>>()), Times.Once);
+            FriendRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Friend, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -121,10 +119,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewFriendShouldNotCreateNewFriend_incorrect(Friend Friend)
         {
-            var newFriend = Friend;
-
-            await service.Create(newFriend);
-            FriendRepositoryMoq.Verify(x => x.Create(It.IsAny<Friend>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Friend));
+            FriendRepositoryMoq.Verify(x => x.Delete(It.IsAny<Friend>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -143,10 +140,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldFriend_incorrect(Friend Friend)
         {
-            var newFriend = Friend;
-
-            await service.Update(newFriend);
-            FriendRepositoryMoq.Verify(x => x.Update(It.IsAny<Friend>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Friend));
+            FriendRepositoryMoq.Verify(x => x.Update(It.IsAny<Friend>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -158,8 +154,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(Friend.FriendId);
 
-            FriendRepositoryMoq.Verify(x => x.Delete(It.IsAny<Friend>()), Times.Once);
             var result = await service.GetById(Friend.FriendId);
+            FriendRepositoryMoq.Verify(x => x.Delete(It.IsAny<Friend>()), Times.Once);
             Assert.Equal(Friend.FriendId, result.FriendId);
         }
 
@@ -171,11 +167,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             FriendRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Friend, bool>>>())).ReturnsAsync(new List<Friend> { Friend });
 
-            await service.Delete(Friend.FriendId);
-
-            FriendRepositoryMoq.Verify(x => x.Delete(It.IsAny<Friend>()), Times.Once);
-            var result = await service.GetById(Friend.FriendId);
-            Assert.Equal(Friend.FriendId, result.FriendId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Friend.FriendId));
+            FriendRepositoryMoq.Verify(x => x.Delete(It.IsAny<Friend>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -23,9 +23,8 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new Comment() {UserId=0,ItemId=0,ItemType=1,CommentsText="" } },
-                new object[] { new Comment() {UserId=-1,ItemId=0,ItemType=0,CommentsText="ds" } },
-                new object[] { new Comment() {UserId=3,ItemId=-1,ItemType=0,CommentsText="" } },
+                new object[] { new Comment() {CommentsId=0,ItemId=0,ItemType=0,CommentsText="" } },
+                new object[] { new Comment() {CommentsId=-1,ItemId=-1,ItemType=-1,CommentsText="" } },
             };
         }
 
@@ -33,18 +32,16 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new Comment() {UserId=1,ItemId=1,ItemType=1,CommentsText="sd" } },
-                new object[] { new Comment() {UserId=2,ItemId=2,ItemType=2,CommentsText="ds" } },
-                new object[] { new Comment() {UserId=3,ItemId=3,ItemType=3,CommentsText="f" } },
+                new object[] { new Comment() {CommentsId=1,ItemId=1,ItemType=1,CommentsText="sd" } },
+                new object[] { new Comment() {CommentsId=2,ItemId=2,ItemType=2,CommentsText="ds" } },
             };
         }
         public static IEnumerable<object[]> GetIncorrectComment()
         {
             return new List<object[]>
             {
-                new object[] { new Comment() {CommentsId=0, UserId=0,ItemId=0,ItemType=1,CommentsText="" } },
-                new object[] { new Comment() {CommentsId=-1, UserId=-1,ItemId=0,ItemType=0,CommentsText="ds" } },
-                new object[] { new Comment() {CommentsId = 3, UserId=3,ItemId=-1,ItemType=0,CommentsText="" } },
+                new object[] { new Comment() {CommentsId=0, UserId=0,ItemId=0,ItemType=0,CommentsText="" } },
+                new object[] { new Comment() {CommentsId=-1, UserId = -1,ItemId=0,ItemType=0,CommentsText="" } },
             };
         }
 
@@ -52,9 +49,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new Comment() {CommentsId=1, UserId=1,ItemId=1,ItemType=1,CommentsText="sd" } },
-                new object[] { new Comment() {CommentsId = 2, UserId=2,ItemId=2,ItemType=2,CommentsText="ds" } },
-                new object[] { new Comment() {CommentsId = 3, UserId=3,ItemId=3,ItemType=3,CommentsText="f" } },
+                new object[] { new Comment() {CommentsId=1, UserId = 1,ItemId=1,ItemType=1,CommentsText="sd" } },
+                new object[] { new Comment() {CommentsId = 2, UserId = 2,ItemId=2,ItemType=2,CommentsText="ds" } },
+                new object[] { new Comment() {CommentsId = 3, UserId = 3,ItemId=3,ItemType=3,CommentsText="f" } },
             };
         }
 
@@ -98,11 +95,11 @@ namespace BusinessLogic.Tests.СonstructorService
             CommentRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Comment, bool>>>())).ReturnsAsync(new List<Comment> { Comment });
 
             // Act
-            var result = await service.GetById(Comment.CommentsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Comment.CommentsId));
 
             // Assert
-            Assert.Equal(Comment.CommentsId, result.CommentsId);
-            CommentRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Comment, bool>>>()), Times.Once);
+            CommentRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Comment, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -121,10 +118,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewCommentShouldNotCreateNewComment_incorrect(Comment Comment)
         {
-            var newComment = Comment;
-
-            await service.Create(newComment);
-            CommentRepositoryMoq.Verify(x => x.Create(It.IsAny<Comment>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Comment));
+            CommentRepositoryMoq.Verify(x => x.Delete(It.IsAny<Comment>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -143,10 +139,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldComment_incorrect(Comment Comment)
         {
-            var newComment = Comment;
-
-            await service.Update(newComment);
-            CommentRepositoryMoq.Verify(x => x.Update(It.IsAny<Comment>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Comment));
+            CommentRepositoryMoq.Verify(x => x.Update(It.IsAny<Comment>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -158,8 +153,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(Comment.CommentsId);
 
-            CommentRepositoryMoq.Verify(x => x.Delete(It.IsAny<Comment>()), Times.Once);
             var result = await service.GetById(Comment.CommentsId);
+            CommentRepositoryMoq.Verify(x => x.Delete(It.IsAny<Comment>()), Times.Once);
             Assert.Equal(Comment.CommentsId, result.CommentsId);
         }
 
@@ -171,11 +166,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             CommentRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Comment, bool>>>())).ReturnsAsync(new List<Comment> { Comment });
 
-            await service.Delete(Comment.CommentsId);
-
-            CommentRepositoryMoq.Verify(x => x.Delete(It.IsAny<Comment>()), Times.Once);
-            var result = await service.GetById(Comment.CommentsId);
-            Assert.Equal(Comment.CommentsId, result.CommentsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Comment.CommentsId));
+            CommentRepositoryMoq.Verify(x => x.Delete(It.IsAny<Comment>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

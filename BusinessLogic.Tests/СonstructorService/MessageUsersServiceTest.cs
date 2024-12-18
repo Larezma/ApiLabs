@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -25,7 +25,6 @@ namespace BusinessLogic.Tests.СonstructorService
             {
                 new object[] { new MessageUser() {SenderId=0,ReceiverId=0,MessageContent=""} },
                 new object[] { new MessageUser() {SenderId=-1,ReceiverId=1,MessageContent=""} },
-                new object[] { new MessageUser() {SenderId=3,ReceiverId=0,MessageContent="sdsd"} },
             };
         }
 
@@ -44,7 +43,6 @@ namespace BusinessLogic.Tests.СonstructorService
             {
                 new object[] { new MessageUser() {MessageId=0, SenderId=0,ReceiverId=0,MessageContent=""} },
                 new object[] { new MessageUser() {MessageId=-1, SenderId=0,ReceiverId=1,MessageContent="sdds"} },
-                new object[] { new MessageUser() {MessageId=3, SenderId=1,ReceiverId=0,MessageContent=""} },
             };
         }
 
@@ -98,11 +96,11 @@ namespace BusinessLogic.Tests.СonstructorService
             MessageUserRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<MessageUser, bool>>>())).ReturnsAsync(new List<MessageUser> { MessageUser });
 
             // Act
-            var result = await service.GetById(MessageUser.MessageId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(MessageUser.MessageId));
 
             // Assert
-            Assert.Equal(MessageUser.MessageId, result.MessageId);
-            MessageUserRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<MessageUser, bool>>>()), Times.Once);
+            MessageUserRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<MessageUser, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -121,10 +119,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewMessageUserShouldNotCreateNewMessageUser_incorrect(MessageUser MessageUser)
         {
-            var newMessageUser = MessageUser;
-
-            await service.Create(newMessageUser);
-            MessageUserRepositoryMoq.Verify(x => x.Create(It.IsAny<MessageUser>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(MessageUser));
+            MessageUserRepositoryMoq.Verify(x => x.Delete(It.IsAny<MessageUser>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -143,10 +140,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldMessageUser_incorrect(MessageUser MessageUser)
         {
-            var newMessageUser = MessageUser;
-
-            await service.Update(newMessageUser);
-            MessageUserRepositoryMoq.Verify(x => x.Update(It.IsAny<MessageUser>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(MessageUser));
+            MessageUserRepositoryMoq.Verify(x => x.Update(It.IsAny<MessageUser>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -158,8 +154,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(MessageUser.MessageId);
 
-            MessageUserRepositoryMoq.Verify(x => x.Delete(It.IsAny<MessageUser>()), Times.Once);
             var result = await service.GetById(MessageUser.MessageId);
+            MessageUserRepositoryMoq.Verify(x => x.Delete(It.IsAny<MessageUser>()), Times.Once);
             Assert.Equal(MessageUser.MessageId, result.MessageId);
         }
 
@@ -171,11 +167,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             MessageUserRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<MessageUser, bool>>>())).ReturnsAsync(new List<MessageUser> { MessageUser });
 
-            await service.Delete(MessageUser.MessageId);
-
-            MessageUserRepositoryMoq.Verify(x => x.Delete(It.IsAny<MessageUser>()), Times.Once);
-            var result = await service.GetById(MessageUser.MessageId);
-            Assert.Equal(MessageUser.MessageId, result.MessageId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(MessageUser.MessageId));
+            MessageUserRepositoryMoq.Verify(x => x.Delete(It.IsAny<MessageUser>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

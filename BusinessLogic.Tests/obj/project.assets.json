@@ -5674,11 +5674,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic.Tests\\BusinessLogic.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic.Tests\\BusinessLogic.Tests.csproj",
       "projectName": "BusinessLogic.Tests",
-      "projectPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic.Tests\\BusinessLogic.Tests.csproj",
+      "projectPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic.Tests\\BusinessLogic.Tests.csproj",
       "packagesPath": "C:\\Users\\Otec\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic.Tests\\obj\\",
+      "outputPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Otec\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5696,8 +5696,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic\\BusinessLogic.csproj": {
-              "projectPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\BusinessLogic\\BusinessLogic.csproj"
+            "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic\\BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\BusinessLogic\\BusinessLogic.csproj"
             }
           }
         }

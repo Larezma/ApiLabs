@@ -4062,11 +4062,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\DataAccess\\DataAccess.csproj",
+      "projectPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\Otec\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\DataAccess\\obj\\",
+      "outputPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Otec\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4084,8 +4084,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\Otec\\Desktop\\Russu Projects\\ApiLabs\\Domain\\Domain.csproj"
+            "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\Otec\\Desktop\\Lab 5 Russu\\Domain\\Domain.csproj"
             }
           }
         }

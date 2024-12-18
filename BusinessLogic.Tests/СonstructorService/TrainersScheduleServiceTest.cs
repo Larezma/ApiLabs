@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -24,8 +24,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new TrainersSchedule() { ScheduleId = 0, TrainerId = 0, TypeOfTraining = "", Date = new DateTime(2015, 7, 20, 18, 30, 25), Time = new DateTime(2015, 7, 20, 18, 30, 25) } },
-                new object[] { new TrainersSchedule() { ScheduleId = -1, TrainerId = 0, TypeOfTraining = "", Date = new DateTime(2015, 7, 20, 18, 30, 25), Time = new DateTime(2015, 7, 20, 18, 30, 25) } },
-                new object[] { new TrainersSchedule() { ScheduleId = 0, TrainerId = -1, TypeOfTraining = "", Date = new DateTime(2015, 7, 20, 18, 30, 25), Time = new DateTime(2015, 7, 20, 18, 30, 25) } },
+                new object[] { new TrainersSchedule() { ScheduleId = -1, TrainerId = -1, TypeOfTraining = "", Date = new DateTime(2015, 7, 20, 18, 30, 25), Time = new DateTime(2015, 7, 20, 18, 30, 25) } },
             };
         }
 
@@ -43,8 +42,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new TrainersSchedule() {Id= 0, ScheduleId = 0, TrainerId = 0, TypeOfTraining = "", Date = new DateTime(2015, 7, 20, 18, 30, 25), Time = new DateTime(2015, 7, 20, 18, 30, 25) } },
-                new object[] { new TrainersSchedule() {Id=-1, ScheduleId = -1, TrainerId = 0, TypeOfTraining = "", Date = new DateTime(2015, 7, 20, 18, 30, 25), Time = new DateTime(2015, 7, 20, 18, 30, 25) } },
-                new object[] { new TrainersSchedule() {Id = 3, ScheduleId = 0, TrainerId = -1, TypeOfTraining = "", Date = new DateTime(2015, 7, 20, 18, 30, 25), Time = new DateTime(2015, 7, 20, 18, 30, 25) } },
+                new object[] { new TrainersSchedule() {Id=-1, ScheduleId = -1, TrainerId = -1, TypeOfTraining = "", Date = new DateTime(2015, 7, 20, 18, 30, 25), Time = new DateTime(2015, 7, 20, 18, 30, 25) } },
             };
         }
 
@@ -98,11 +96,11 @@ namespace BusinessLogic.Tests.СonstructorService
             TrainersScheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<TrainersSchedule, bool>>>())).ReturnsAsync(new List<TrainersSchedule> { TrainersSchedule });
 
             // Act
-            var result = await service.GetById(TrainersSchedule.Id);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(TrainersSchedule.Id));
 
             // Assert
-            Assert.Equal(TrainersSchedule.Id, result.Id);
-            TrainersScheduleRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<TrainersSchedule, bool>>>()), Times.Once);
+            TrainersScheduleRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<TrainersSchedule, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -121,10 +119,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewTrainersScheduleShouldNotCreateNewTrainersSchedule_incorrect(TrainersSchedule TrainersSchedule)
         {
-            var newTrainersSchedule = TrainersSchedule;
-
-            await service.Create(newTrainersSchedule);
-            TrainersScheduleRepositoryMoq.Verify(x => x.Create(It.IsAny<TrainersSchedule>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(TrainersSchedule));
+            TrainersScheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<TrainersSchedule>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -143,10 +140,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldTrainersSchedule_incorrect(TrainersSchedule TrainersSchedule)
         {
-            var newTrainersSchedule = TrainersSchedule;
-
-            await service.Update(newTrainersSchedule);
-            TrainersScheduleRepositoryMoq.Verify(x => x.Update(It.IsAny<TrainersSchedule>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(TrainersSchedule));
+            TrainersScheduleRepositoryMoq.Verify(x => x.Update(It.IsAny<TrainersSchedule>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -158,8 +154,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(TrainersSchedule.Id);
 
-            TrainersScheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<TrainersSchedule>()), Times.Once);
             var result = await service.GetById(TrainersSchedule.Id);
+            TrainersScheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<TrainersSchedule>()), Times.Once);
             Assert.Equal(TrainersSchedule.Id, result.Id);
         }
 
@@ -171,11 +167,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             TrainersScheduleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<TrainersSchedule, bool>>>())).ReturnsAsync(new List<TrainersSchedule> { TrainersSchedule });
 
-            await service.Delete(TrainersSchedule.Id);
-
-            TrainersScheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<TrainersSchedule>()), Times.Once);
-            var result = await service.GetById(TrainersSchedule.Id);
-            Assert.Equal(TrainersSchedule.Id, result.Id);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(TrainersSchedule.Id));
+            TrainersScheduleRepositoryMoq.Verify(x => x.Delete(It.IsAny<TrainersSchedule>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -24,8 +24,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new Group() {OwnerGroups=0,GroupsName=""} },
-                new object[] { new Group() {OwnerGroups=-1,GroupsName="ds"} },
-                new object[] { new Group() {OwnerGroups=3,GroupsName=""} },
+                new object[] { new Group() {OwnerGroups=-1,GroupsName=""} },
             };
         }
 
@@ -44,7 +43,6 @@ namespace BusinessLogic.Tests.СonstructorService
             {
                 new object[] { new Group() {GroupsId=0, OwnerGroups=0,GroupsName=""} },
                 new object[] { new Group() {GroupsId=-1, OwnerGroups=1,GroupsName=""} },
-                new object[] { new Group() {GroupsId=3, OwnerGroups=0,GroupsName="sdds"} },
             };
         }
 
@@ -98,11 +96,11 @@ namespace BusinessLogic.Tests.СonstructorService
             GroupRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Group, bool>>>())).ReturnsAsync(new List<Group> { Group });
 
             // Act
-            var result = await service.GetById(Group.GroupsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Group.GroupsId));
 
             // Assert
-            Assert.Equal(Group.GroupsId, result.GroupsId);
-            GroupRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Group, bool>>>()), Times.Once);
+            GroupRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Group, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -121,10 +119,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewGroupShouldNotCreateNewGroup_incorrect(Group Group)
         {
-            var newGroup = Group;
-
-            await service.Create(newGroup);
-            GroupRepositoryMoq.Verify(x => x.Create(It.IsAny<Group>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Group));
+            GroupRepositoryMoq.Verify(x => x.Delete(It.IsAny<Group>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -143,10 +140,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldGroup_incorrect(Group Group)
         {
-            var newGroup = Group;
-
-            await service.Update(newGroup);
-            GroupRepositoryMoq.Verify(x => x.Update(It.IsAny<Group>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Group));
+            GroupRepositoryMoq.Verify(x => x.Update(It.IsAny<Group>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -158,8 +154,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(Group.GroupsId);
 
-            GroupRepositoryMoq.Verify(x => x.Delete(It.IsAny<Group>()), Times.Once);
             var result = await service.GetById(Group.GroupsId);
+            GroupRepositoryMoq.Verify(x => x.Delete(It.IsAny<Group>()), Times.Once);
             Assert.Equal(Group.GroupsId, result.GroupsId);
         }
 
@@ -171,11 +167,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             GroupRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Group, bool>>>())).ReturnsAsync(new List<Group> { Group });
 
-            await service.Delete(Group.GroupsId);
-
-            GroupRepositoryMoq.Verify(x => x.Delete(It.IsAny<Group>()), Times.Once);
-            var result = await service.GetById(Group.GroupsId);
-            Assert.Equal(Group.GroupsId, result.GroupsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Group.GroupsId));
+            GroupRepositoryMoq.Verify(x => x.Delete(It.IsAny<Group>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

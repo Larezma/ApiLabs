@@ -1,11 +1,11 @@
-﻿using Domain.Interfaces.Service;
-using Domain.Interfaces.Wrapper;
+﻿using System;
 using Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Interfaces.Service;
+using Domain.Interfaces.Wrapper;
 
 namespace BusinessLogic.Services
 {
@@ -28,14 +28,15 @@ namespace BusinessLogic.Services
             if (id <= 0)
             {
                 throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+
             }
             else if (id > int.MaxValue)
             {
                 throw new ArgumentNullException("id не может превышать лимит int!");
             }
-            var nutrition = await _repositoryWrapper.Nutrition
-                .FindByCondition(x => x.NutritionId == id);
-            return nutrition.First();
+            var users = await _repositoryWrapper.Nutrition
+            .FindByCondition(x => x.NutritionId == id);
+            return users.First();
         }
 
         public async Task Create(Nutrition model)
@@ -60,7 +61,7 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (int.IsNegative(model.NutritionId) || int.IsNegative(model.Product))
+            if (int.IsNegative(model.NutritionId) || int.IsNegative(model.Product) || !int.TryParse(model.Product.ToString(), out _) || string.IsNullOrEmpty(model.MeanType) || string.IsNullOrEmpty(model.MeanDeacription))
             {
                 throw new ArgumentNullException("id не может быть отрицательным!");
             }

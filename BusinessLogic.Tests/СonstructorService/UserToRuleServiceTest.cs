@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -23,9 +23,8 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new UserToRule() { UserId = 0, RoleId = -1} },
-                new object[] { new UserToRule() { UserId = -1, RoleId = 0} },
-                new object[] { new UserToRule() { UserId = 3, RoleId = -1} },
+                new object[] { new UserToRule() { UserId = 0, RoleId = 0} },
+                new object[] { new UserToRule() { UserId = -1, RoleId = -1} },
             };
         }
 
@@ -42,9 +41,8 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new UserToRule() {Id =0, UserId = 0, RoleId = -1} },
-                new object[] { new UserToRule() {Id =-1, UserId = 0, RoleId = -1} },
-                new object[] { new UserToRule() {Id =3, UserId = 0, RoleId = -1} },
+                new object[] { new UserToRule() {Id =0, UserId = 0, RoleId = 0} },
+                new object[] { new UserToRule() {Id =-1, UserId = -1, RoleId = -1} },
             };
         }
 
@@ -98,11 +96,11 @@ namespace BusinessLogic.Tests.СonstructorService
             UserToRuleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserToRule, bool>>>())).ReturnsAsync(new List<UserToRule> { UserToRule });
 
             // Act
-            var result = await service.GetById(UserToRule.Id);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(UserToRule.Id));
 
             // Assert
-            Assert.Equal(UserToRule.Id, result.Id);
-            UserToRuleRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<UserToRule, bool>>>()), Times.Once);
+            UserToRuleRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<UserToRule, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -121,10 +119,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewUserToRuleShouldNotCreateNewUserToRule_incorrect(UserToRule UserToRule)
         {
-            var newUserToRule = UserToRule;
-
-            await service.Create(newUserToRule);
-            UserToRuleRepositoryMoq.Verify(x => x.Create(It.IsAny<UserToRule>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(UserToRule));
+            UserToRuleRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserToRule>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -143,10 +140,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldUserToRule_incorrect(UserToRule UserToRule)
         {
-            var newUserToRule = UserToRule;
-
-            await service.Update(newUserToRule);
-            UserToRuleRepositoryMoq.Verify(x => x.Update(It.IsAny<UserToRule>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(UserToRule));
+            UserToRuleRepositoryMoq.Verify(x => x.Update(It.IsAny<UserToRule>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -158,8 +154,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(UserToRule.Id);
 
-            UserToRuleRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserToRule>()), Times.Once);
             var result = await service.GetById(UserToRule.Id);
+            UserToRuleRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserToRule>()), Times.Once);
             Assert.Equal(UserToRule.Id, result.Id);
         }
 
@@ -171,11 +167,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             UserToRuleRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserToRule, bool>>>())).ReturnsAsync(new List<UserToRule> { UserToRule });
 
-            await service.Delete(UserToRule.Id);
-
-            UserToRuleRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserToRule>()), Times.Once);
-            var result = await service.GetById(UserToRule.Id);
-            Assert.Equal(UserToRule.Id, result.Id);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(UserToRule.Id));
+            UserToRuleRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserToRule>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

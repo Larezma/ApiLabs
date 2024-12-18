@@ -1,17 +1,17 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Service;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
+using Domain.Interfaces.Service;
 
 namespace BusinessLogic.Tests.СonstructorService
 {
@@ -24,9 +24,8 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new UserNutrition() {UserId = 0, NutritionId = 0, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25),NutritionType = "",  Report="" } },
-                new object[] { new UserNutrition() {UserId = -1, NutritionId = 0, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "", Report ="" } },
-                new object[] { new UserNutrition() {UserId = 0, NutritionId = -1, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "", Report ="ds" } },
+                new object[] { new UserNutrition() { UserId = 0, NutritionId = 0, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25),NutritionType = "",  Report="" } },
+                new object[] { new UserNutrition() { UserId = -1, NutritionId = -1, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "", Report ="" } },
             };
         }
 
@@ -34,9 +33,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new UserNutrition() {UserId = 1, NutritionId = 1, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "ds", Report ="ds" } },
-                new object[] { new UserNutrition() {UserId = 2, NutritionId = 2, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "ds", Report ="ds" } },
-                new object[] { new UserNutrition() {UserId = 3, NutritionId = 3, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "ds", Report ="ds" } },
+                new object[] { new UserNutrition() { UserId = 1, NutritionId = 1, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "ds", Report ="ds" } },
+                new object[] { new UserNutrition() { UserId = 2, NutritionId = 2, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "ds", Report ="ds" } },
+                new object[] { new UserNutrition() { UserId = 3, NutritionId = 3, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "ds", Report ="ds" } },
             };
         }
         public static IEnumerable<object[]> GetIncorrectUserNutrition()
@@ -44,8 +43,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new UserNutrition() {UserNutritionId = 0, UserId = 0, NutritionId = 0, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "", Report ="" } },
-                new object[] { new UserNutrition() {UserNutritionId = 1, UserId = -1, NutritionId = 0, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "", Report ="" } },
-                new object[] { new UserNutrition() {UserNutritionId = 3, UserId = 0, NutritionId = -1, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "", Report ="ds" } },
+                new object[] { new UserNutrition() {UserNutritionId = -1, UserId = -1, NutritionId = -1, DateOfAdmission = new DateTime(2015, 7, 20, 18, 30, 25),AppointmentTime = new DateTime(2015, 7, 20, 18, 30, 25), NutritionType = "", Report ="" } },
             };
         }
 
@@ -99,11 +97,11 @@ namespace BusinessLogic.Tests.СonstructorService
             UserNutritionRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserNutrition, bool>>>())).ReturnsAsync(new List<UserNutrition> { UserNutrition });
 
             // Act
-            var result = await service.GetById(UserNutrition.UserNutritionId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(UserNutrition.UserNutritionId));
 
             // Assert
-            Assert.Equal(UserNutrition.UserNutritionId, result.UserNutritionId);
-            UserNutritionRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<UserNutrition, bool>>>()), Times.Once);
+            UserNutritionRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<UserNutrition, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -122,10 +120,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewUserNutritionShouldNotCreateNewUserNutrition_incorrect(UserNutrition UserNutrition)
         {
-            var newUserNutrition = UserNutrition;
-
-            await service.Create(newUserNutrition);
-            UserNutritionRepositoryMoq.Verify(x => x.Create(It.IsAny<UserNutrition>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(UserNutrition));
+            UserNutritionRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserNutrition>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -144,10 +141,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldUserNutrition_incorrect(UserNutrition UserNutrition)
         {
-            var newUserNutrition = UserNutrition;
-
-            await service.Update(newUserNutrition);
-            UserNutritionRepositoryMoq.Verify(x => x.Update(It.IsAny<UserNutrition>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(UserNutrition));
+            UserNutritionRepositoryMoq.Verify(x => x.Update(It.IsAny<UserNutrition>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -159,8 +155,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(UserNutrition.UserNutritionId);
 
-            UserNutritionRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserNutrition>()), Times.Once);
             var result = await service.GetById(UserNutrition.UserNutritionId);
+            UserNutritionRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserNutrition>()), Times.Once);
             Assert.Equal(UserNutrition.UserNutritionId, result.UserNutritionId);
         }
 
@@ -172,12 +168,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             UserNutritionRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserNutrition, bool>>>())).ReturnsAsync(new List<UserNutrition> { UserNutrition });
 
-            await service.Delete(UserNutrition.UserNutritionId);
-
-            UserNutritionRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserNutrition>()), Times.Once);
-            var result = await service.GetById(UserNutrition.UserNutritionId);
-            Assert.Equal(UserNutrition.UserNutritionId, result.UserNutritionId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(UserNutrition.UserNutritionId));
+            UserNutritionRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserNutrition>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
-
     }
 }

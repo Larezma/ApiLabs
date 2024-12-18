@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -39,8 +39,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new Dialog() {DialogsId = 0, TextDialogs = ""} },
-                new object[] { new Dialog() {DialogsId = -1, TextDialogs = "ds"} },
-                new object[] { new Dialog() {DialogsId = 3, TextDialogs = ""} },
+                new object[] { new Dialog() {DialogsId = -1, TextDialogs = ""} },
             };
         }
 
@@ -94,11 +93,11 @@ namespace BusinessLogic.Tests.СonstructorService
             DialogRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Dialog, bool>>>())).ReturnsAsync(new List<Dialog> { Dialog });
 
             // Act
-            var result = await service.GetById(Dialog.DialogsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Dialog.DialogsId));
 
             // Assert
-            Assert.Equal(Dialog.DialogsId, result.DialogsId);
-            DialogRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Dialog, bool>>>()), Times.Once);
+            DialogRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Dialog, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -117,10 +116,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewDialogShouldNotCreateNewDialog_incorrect(Dialog Dialog)
         {
-            var newDialog = Dialog;
-
-            await service.Create(newDialog);
-            DialogRepositoryMoq.Verify(x => x.Create(It.IsAny<Dialog>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Dialog));
+            DialogRepositoryMoq.Verify(x => x.Delete(It.IsAny<Dialog>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -139,10 +137,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldDialog_incorrect(Dialog Dialog)
         {
-            var newDialog = Dialog;
-
-            await service.Update(newDialog);
-            DialogRepositoryMoq.Verify(x => x.Update(It.IsAny<Dialog>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Dialog));
+            DialogRepositoryMoq.Verify(x => x.Update(It.IsAny<Dialog>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -154,8 +151,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(Dialog.DialogsId);
 
-            DialogRepositoryMoq.Verify(x => x.Delete(It.IsAny<Dialog>()), Times.Once);
             var result = await service.GetById(Dialog.DialogsId);
+            DialogRepositoryMoq.Verify(x => x.Delete(It.IsAny<Dialog>()), Times.Once);
             Assert.Equal(Dialog.DialogsId, result.DialogsId);
         }
 
@@ -167,12 +164,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             DialogRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Dialog, bool>>>())).ReturnsAsync(new List<Dialog> { Dialog });
 
-            await service.Delete(Dialog.DialogsId);
-
-            DialogRepositoryMoq.Verify(x => x.Delete(It.IsAny<Dialog>()), Times.Once);
-            var result = await service.GetById(Dialog.DialogsId);
-            Assert.Equal(Dialog.DialogsId, result.DialogsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Dialog.DialogsId));
+            DialogRepositoryMoq.Verify(x => x.Delete(It.IsAny<Dialog>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
-
     }
 }

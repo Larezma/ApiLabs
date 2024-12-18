@@ -1,11 +1,11 @@
-﻿using Domain.Interfaces.Service;
-using Domain.Interfaces.Wrapper;
+﻿using System;
 using Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Interfaces.Service;
+using Domain.Interfaces.Wrapper;
 
 namespace BusinessLogic.Services
 {
@@ -45,7 +45,7 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId) || int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId))
+            if (int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId) || int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId) || model.UserId <= 0 || model.RoleId <= 0)
             {
                 throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
             }
@@ -60,7 +60,7 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId))
+            if (int.IsNegative(model.Id) || int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId) || int.IsNegative(model.Id) || int.IsNegative(model.UserId) || int.IsNegative(model.RoleId) || model.Id <= 0 || model.UserId <= 0 || model.RoleId <= 0)
             {
                 throw new ArgumentNullException("id не может быть отрицательным!");
             }

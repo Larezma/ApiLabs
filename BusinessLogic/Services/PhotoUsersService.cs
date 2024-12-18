@@ -1,11 +1,11 @@
-﻿using Domain.Interfaces.Service;
-using Domain.Interfaces.Wrapper;
+﻿using System;
 using Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Interfaces.Service;
+using Domain.Interfaces.Wrapper;
 
 namespace BusinessLogic.Services
 {
@@ -28,14 +28,15 @@ namespace BusinessLogic.Services
             if (id <= 0)
             {
                 throw new ArgumentNullException("id не может быть отрицательным либо равен нулю!");
+
             }
             else if (id > int.MaxValue)
             {
                 throw new ArgumentNullException("id не может превышать лимит int!");
             }
-            var photoUsers = await _repositoryWrapper.PhotoUsers
-                .FindByCondition(x => x.PhotoId == id);
-            return photoUsers.First();
+            var users = await _repositoryWrapper.PhotoUsers
+            .FindByCondition(x => x.PhotoId == id);
+            return users.First();
         }
 
         public async Task Create(PhotoUser model)
@@ -60,7 +61,7 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (int.IsNegative(model.PhotoId))
+            if (int.IsNegative(model.PhotoId) || !decimal.TryParse(model.UserId.ToString(), out _) || string.IsNullOrEmpty(model.PhotoLink))
             {
                 throw new ArgumentNullException("id не может быть отрицательным!");
             }

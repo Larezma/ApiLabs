@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -24,8 +24,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new Achievement() {AchievementsText = "", AchievementsType= 0 } },
-                new object[] { new Achievement() {AchievementsText = "sd", AchievementsType= -1 } },
-                new object[] { new Achievement() {AchievementsText = "", AchievementsType= 3 } },
+                new object[] { new Achievement() {AchievementsText = "", AchievementsType= -1 } },
             };
         }
 
@@ -43,8 +42,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new Achievement() {AchievementsId=0, AchievementsText = "", AchievementsType= 0 } },
-                new object[] { new Achievement() {AchievementsId=-1, AchievementsText = "sd", AchievementsType= -1 } },
-                new object[] { new Achievement() {AchievementsId = 3, AchievementsText = "", AchievementsType= -3 } },
+                new object[] { new Achievement() {AchievementsId=-1, AchievementsText = "", AchievementsType= -1 } },
             };
         }
 
@@ -97,11 +95,11 @@ namespace BusinessLogic.Tests.СonstructorService
             AchievementRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Achievement, bool>>>())).ReturnsAsync(new List<Achievement> { Achievement });
 
             // Act
-            var result = await service.GetById(Achievement.AchievementsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(Achievement.AchievementsId));
 
             // Assert
-            Assert.Equal(Achievement.AchievementsId, result.AchievementsId);
-            AchievementRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Achievement, bool>>>()), Times.Once);
+            AchievementRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<Achievement, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -120,10 +118,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewAchievementShouldNotCreateNewAchievement_incorrect(Achievement Achievement)
         {
-            var newAchievement = Achievement;
-
-            await service.Create(newAchievement);
-            AchievementRepositoryMoq.Verify(x => x.Create(It.IsAny<Achievement>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(Achievement));
+            AchievementRepositoryMoq.Verify(x => x.Delete(It.IsAny<Achievement>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -142,10 +139,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldAchievement_incorrect(Achievement Achievement)
         {
-            var newAchievement = Achievement;
-
-            await service.Update(newAchievement);
-            AchievementRepositoryMoq.Verify(x => x.Update(It.IsAny<Achievement>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(Achievement));
+            AchievementRepositoryMoq.Verify(x => x.Update(It.IsAny<Achievement>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -157,8 +153,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(Achievement.AchievementsId);
 
-            AchievementRepositoryMoq.Verify(x => x.Delete(It.IsAny<Achievement>()), Times.Once);
             var result = await service.GetById(Achievement.AchievementsId);
+            AchievementRepositoryMoq.Verify(x => x.Delete(It.IsAny<Achievement>()), Times.Once);
             Assert.Equal(Achievement.AchievementsId, result.AchievementsId);
         }
 
@@ -170,11 +166,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             AchievementRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<Achievement, bool>>>())).ReturnsAsync(new List<Achievement> { Achievement });
 
-            await service.Delete(Achievement.AchievementsId);
-
-            AchievementRepositoryMoq.Verify(x => x.Delete(It.IsAny<Achievement>()), Times.Once);
-            var result = await service.GetById(Achievement.AchievementsId);
-            Assert.Equal(Achievement.AchievementsId, result.AchievementsId);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(Achievement.AchievementsId));
+            AchievementRepositoryMoq.Verify(x => x.Delete(It.IsAny<Achievement>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

@@ -1,15 +1,15 @@
-﻿using BusinessLogic.Services;
-using Domain.Interfaces.Repository;
-using Domain.Interfaces.Wrapper;
-using Domain.Models;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using BusinessLogic.Services;
+using Domain.Models;
+using Domain.Interfaces.Repository;
+using Domain.Interfaces.Wrapper;
+using Moq;
 using Xunit.Sdk;
 
 namespace BusinessLogic.Tests.СonstructorService
@@ -24,8 +24,7 @@ namespace BusinessLogic.Tests.СonstructorService
             return new List<object[]>
             {
                 new object[] { new UserTraining() { TrainingId = 0,UserId = 0,TrainerId = 0, DayOfWeek = "", Duration = "" } },
-                new object[] { new UserTraining() { TrainingId = -1,UserId = 0,TrainerId = 0, DayOfWeek = "sd", Duration = "" } },
-                new object[] { new UserTraining() { TrainingId = 0,UserId = -1,TrainerId = -1, DayOfWeek = "", Duration = "ds" } },
+                new object[] { new UserTraining() { TrainingId = -1, UserId = -1,TrainerId = -1, DayOfWeek = "", Duration = "" } },
             };
         }
 
@@ -33,18 +32,17 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new UserTraining() { TrainingId = 1,UserId = 1,TrainerId = 1, DayOfWeek = "sd", Duration = "ddffd" } },
-                new object[] { new UserTraining() { TrainingId = 2,UserId = 2,TrainerId = 2, DayOfWeek = "ds", Duration = "fdfd" } },
-                new object[] { new UserTraining() { TrainingId = 3,UserId = 3,TrainerId = 3, DayOfWeek = "ffd", Duration = "asas" } },
+                new object[] { new UserTraining() { TrainingId = 1, UserId = 1,TrainerId = 1, DayOfWeek = "sd", Duration = "ddffd" } },
+                new object[] { new UserTraining() { TrainingId = 2, UserId = 2,TrainerId = 2, DayOfWeek = "ds", Duration = "fdfd" } },
+                new object[] { new UserTraining() { TrainingId = 3, UserId = 3,TrainerId = 3, DayOfWeek = "ffd", Duration = "asas" } },
             };
         }
         public static IEnumerable<object[]> GetIncorrectUserTraining()
         {
             return new List<object[]>
             {
-                new object[] { new UserTraining() {Id = 0, TrainingId = 0,UserId = 0,TrainerId = 0, DayOfWeek = "dss", Duration = "" } },
-                new object[] { new UserTraining() {Id = -1, TrainingId = 0,UserId = 0000,TrainerId = 0, DayOfWeek = "", Duration = "sdds" } },
-                new object[] { new UserTraining() {Id = 3, TrainingId = -1,UserId = 0,TrainerId = -1, DayOfWeek = "", Duration = "sdds" } },
+                new object[] { new UserTraining() {Id = 0, TrainingId = 0, UserId = 0,TrainerId = 0, DayOfWeek = "", Duration = "" } },
+                new object[] { new UserTraining() {Id = -1, TrainingId = -1, UserId = -1,TrainerId = -1, DayOfWeek = "", Duration = "" } },
             };
         }
 
@@ -52,9 +50,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             return new List<object[]>
             {
-                new object[] { new UserTraining() {Id = 1, TrainingId = 1,UserId = 1,TrainerId = 1, DayOfWeek = "sd", Duration = "ddffd" } },
-                new object[] { new UserTraining() {Id = 2, TrainingId = 2,UserId = 2,TrainerId = 2, DayOfWeek = "ds", Duration = "fdfd" } },
-                new object[] { new UserTraining() {Id = 3, TrainingId = 3,UserId = 3,TrainerId = 3, DayOfWeek = "ffd", Duration = "asas" } },
+                new object[] { new UserTraining() {Id = 1, TrainingId = 1, UserId = 1,TrainerId = 1, DayOfWeek = "sd", Duration = "ddffd" } },
+                new object[] { new UserTraining() {Id = 2, TrainingId = 2, UserId = 2,TrainerId = 2, DayOfWeek = "ds", Duration = "fdfd" } },
+                new object[] { new UserTraining() {Id = 3, TrainingId = 3, UserId = 3,TrainerId = 3, DayOfWeek = "ffd", Duration = "asas" } },
             };
         }
 
@@ -98,11 +96,11 @@ namespace BusinessLogic.Tests.СonstructorService
             UserTrainingRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserTraining, bool>>>())).ReturnsAsync(new List<UserTraining> { UserTraining });
 
             // Act
-            var result = await service.GetById(UserTraining.Id);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.GetById(UserTraining.Id));
 
             // Assert
-            Assert.Equal(UserTraining.Id, result.Id);
-            UserTrainingRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<UserTraining, bool>>>()), Times.Once);
+            UserTrainingRepositoryMoq.Verify(x => x.FindByCondition(It.IsAny<Expression<Func<UserTraining, bool>>>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -121,10 +119,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task CreateAsyncNewUserTrainingShouldNotCreateNewUserTraining_incorrect(UserTraining UserTraining)
         {
-            var newUserTraining = UserTraining;
-
-            await service.Create(newUserTraining);
-            UserTrainingRepositoryMoq.Verify(x => x.Create(It.IsAny<UserTraining>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Create(UserTraining));
+            UserTrainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserTraining>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -143,10 +140,9 @@ namespace BusinessLogic.Tests.СonstructorService
 
         public async Task UpdateAsyncOldUserTraining_incorrect(UserTraining UserTraining)
         {
-            var newUserTraining = UserTraining;
-
-            await service.Update(newUserTraining);
-            UserTrainingRepositoryMoq.Verify(x => x.Update(It.IsAny<UserTraining>()), Times.Once);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Update(UserTraining));
+            UserTrainingRepositoryMoq.Verify(x => x.Update(It.IsAny<UserTraining>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
         [Theory]
@@ -158,8 +154,8 @@ namespace BusinessLogic.Tests.СonstructorService
 
             await service.Delete(UserTraining.Id);
 
-            UserTrainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserTraining>()), Times.Once);
             var result = await service.GetById(UserTraining.Id);
+            UserTrainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserTraining>()), Times.Once);
             Assert.Equal(UserTraining.Id, result.Id);
         }
 
@@ -171,11 +167,9 @@ namespace BusinessLogic.Tests.СonstructorService
         {
             UserTrainingRepositoryMoq.Setup(x => x.FindByCondition(It.IsAny<Expression<Func<UserTraining, bool>>>())).ReturnsAsync(new List<UserTraining> { UserTraining });
 
-            await service.Delete(UserTraining.Id);
-
-            UserTrainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserTraining>()), Times.Once);
-            var result = await service.GetById(UserTraining.Id);
-            Assert.Equal(UserTraining.Id, result.Id);
+            var result = await Assert.ThrowsAnyAsync<ArgumentNullException>(() => service.Delete(UserTraining.Id));
+            UserTrainingRepositoryMoq.Verify(x => x.Delete(It.IsAny<UserTraining>()), Times.Never);
+            Assert.IsType<ArgumentNullException>(result);
         }
 
     }

@@ -1,8 +1,8 @@
 using BusinessLogic.Services;
+using Domain.Models;
 using DataAccess.Wrapper;
 using Domain.Interfaces.Service;
 using Domain.Interfaces.Wrapper;
-using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;

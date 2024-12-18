@@ -1,11 +1,11 @@
-﻿using Domain.Interfaces.Service;
-using Domain.Interfaces.Wrapper;
+﻿using System;
 using Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Interfaces.Service;
+using Domain.Interfaces.Wrapper;
 
 namespace BusinessLogic.Services
 {
@@ -45,7 +45,7 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if ((!int.TryParse(model.UsersId.ToString(), out _) || string.IsNullOrEmpty(model.PublicationText)))
+            if (!int.TryParse(model.UsersId.ToString(), out _) || string.IsNullOrEmpty(model.PublicationText))
             {
                 throw new ArgumentNullException("Одно из ключевых полей введенны неправильно !");
             }
@@ -60,7 +60,7 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (int.IsNegative(model.PublicationsId) || int.IsNegative(model.PublicationsId))
+            if (int.IsNegative(model.PublicationsId) || int.IsNegative(model.PublicationsId) || !int.TryParse(model.UsersId.ToString(), out _) || string.IsNullOrEmpty(model.PublicationText))
             {
                 throw new ArgumentNullException("id не может быть отрицательным!");
             }

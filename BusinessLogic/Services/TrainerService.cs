@@ -1,12 +1,12 @@
-﻿using Domain.Interfaces.Service;
-using Domain.Interfaces.Wrapper;
+﻿using System;
 using Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Interfaces.Service;
+using Domain.Interfaces.Wrapper;
+using System.Reflection;
 
 namespace BusinessLogic.Services
 {
@@ -62,7 +62,7 @@ namespace BusinessLogic.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (int.IsNegative(model.TrainerId))
+            if (int.IsNegative(model.TrainerId) || string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.MiddleName) || string.IsNullOrEmpty(model.LastName) || string.IsNullOrEmpty(model.PhoneNumber))
             {
                 throw new ArgumentNullException("id не может быть отрицательным!");
             }
